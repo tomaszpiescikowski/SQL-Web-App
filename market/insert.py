@@ -38,6 +38,7 @@ def insert_into_oracle(table_name, list_of_parameters, list_of_arguments):
         print('Wstawianie danych powiodlo sie.')
         print(f'Wykonano polecenie {insert_statement}\n')
         conn.commit()
+        
     finally:
         cur.close()
 
