@@ -8,7 +8,7 @@ Dzięki temu możemy połączyć pythona z naszą bazą: https://www.oracle.com/
 Utwórz na pulpicie folder ProjektSQL. 
 Następnie wypakuj z pobranego Rar'a folder "Instaclient <wersja pewnie 21.3 czy coś>" z instaclientem.
 Wrzuć cały powyższy folder do folderu ProjektSQL.
-W folderze ProjektSQL wykonaj komende: git clone https://github.com/tomaszpiescikowski/SQLWebApp
+W folderze ProjektSQL wykonaj komende: git clone https://github.com/tomaszpiescikowski/SQLWebApp.git
 
 Zanim zrobisz cokolwiek, przeczytaj:
 
