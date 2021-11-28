@@ -1,4 +1,4 @@
-# Instrukcja obsługi
+# Ogólna instrukcja obsługi projektu
 
 Heja, tutaj instrukcja
 
@@ -31,3 +31,8 @@ na końcu -> git push
 
 
 
+# Instrukcja obsługi funkcji moich funkcji SQL
+![](important/Screenshot_2.png)
+
+Ważne rzeczy:
+Jak już odpalisz projekt, to możesz zobaczyć jak działają te moje funkcje. Uruchom server w run.py, a potem przejdź do zakładki python console na dole. Powyżej masz screena z rzeczami, które trzeba wpisać. Ogólnie jak wprowadza się jakieś zmiany, to trzeba zresetować tą konsole pythonową i jeszcze raz importować te rzeczy. A po co w ogóle ta konsola? Po to, żeby można było testować te funkcje na bieżąco, bo narazie nie mamy interfejsu graficznego itp. Więc warto tego używać. No i zmień sobie ustawienia clienta w __init__.py na swoje dane, żeby bawić się na swoim koncie. Możesz mieć równocześnie otwarty SQLDeveloper i sobie sprawdzać, że rzeczywiście wszystko się zmienia i działa jak należy. Te funkcje są oczywiście to dopracowania, ale póki co fajnie działają jaka komunikacja z bazą. 
