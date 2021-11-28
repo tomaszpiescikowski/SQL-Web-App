@@ -29,7 +29,5 @@ jak zrobisz zmiany w pliku, dodajesz go do stage'a -> git add <plik>
 jak już masz wszystkie zmiany -> git commit -m "komentarz zmian"
 na końcu -> git push
 
-  
-Serwer odpala się w pliku run.py, tam masz więcej instrukcji.
 
 
