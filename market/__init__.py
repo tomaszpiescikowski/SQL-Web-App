@@ -11,4 +11,4 @@ else:
 
 app = Flask(__name__)
 
-from market import routes
+from market import routes, insert
