@@ -4,6 +4,7 @@ from market import conn
 # parameter_to_set      <SET parameter_to_set = ...>,
 # value_to_set          <SET parameter_to_set = value_to_set...>,
 # parameter_to_where    <WHERE parameter_to_where = ...>,
+# sign                  <znak pomiedzy parametrem WHERE a wartoscia>
 # value_to_where        <WHERE parameter_to_where = value_to_where>)
 
 

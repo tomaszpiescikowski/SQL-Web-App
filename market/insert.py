@@ -1,7 +1,7 @@
 from market import conn
 
 # table_name            <nazwa tabli np. pracownicy>
-# list_of_parameters    <nazwy kolumn to insertu w postaci listy np. [id_prac, imie, nazwisko, etat, placa_pod...]>
+# list_of_parameters    <nazwy kolumn do insertu w postaci listy np. [id_prac, imie, nazwisko, etat, placa_pod...]>
 # list_of_arguments     <wartości do wpisania w kolumny z list_of_parameters np. [23, 'jan', 'brzechwa', 'pisarz'...]>
 
 
@@ -15,11 +15,7 @@ def insert_into_oracle(table_name, list_of_parameters, list_of_arguments):
             raise Exception
 
         for parameter in list_of_parameters:
-            if type(parameter) == int:
-                list_of_parameters_string += str(parameter) + ','
-            elif type(parameter) == float:
-                list_of_parameters_string += str(parameter) + ','
-            elif type(parameter) == str:
+            if type(parameter) == str:
                 list_of_parameters_string += parameter.upper() + ','
             else:
                 print(f'Zly typ danych w parametrze: {type(parameter)}')
