@@ -38,7 +38,10 @@ def insert_into_oracle(table_name, list_of_parameters, list_of_arguments):
         print('Wstawianie danych powiodlo sie.')
         print(f'Wykonano polecenie {insert_statement}\n')
         conn.commit()
+<<<<<<< HEAD
         
+=======
+>>>>>>> d47a9e9b283b40a3cedce448859be99b605ebfe2
     finally:
         cur.close()
 
