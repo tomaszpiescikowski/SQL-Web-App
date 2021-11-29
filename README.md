@@ -1,14 +1,17 @@
 # Ogólna instrukcja obsługi projektu
 
-Heja, tutaj instrukcja
+## Heja, tutaj instrukcja
 
 Przede wszystkim musisz pobrać instant client'a Oracle, który tak naprawdę jest tym samym co SQLDeveloper, ale bez GUI.
 Dzięki temu możemy połączyć pythona z naszą bazą: https://www.oracle.com/database/technologies/instant-client/winx64-64-downloads.html
 
-Utwórz na pulpicie folder ProjektSQL. 
-Następnie wypakuj z pobranego Rar'a folder "Instaclient <wersja pewnie 21.3 czy coś>" z instaclientem.
-Wrzuć cały powyższy folder do folderu ProjektSQL.
-W folderze ProjektSQL wykonaj komende: git clone https://github.com/tomaszpiescikowski/SQLWebApp.git
+1. Utwórz na pulpicie folder ProjektSQL.
+
+2. Następnie wypakuj z pobranego Rar'a folder "Instaclient <wersja pewnie 21.3 czy coś>" z instaclientem.
+
+3. Wrzuć cały powyższy folder do folderu ProjektSQL.
+
+4. W folderze ProjektSQL wykonaj komende: git clone https://github.com/tomaszpiescikowski/SQLWebApp.git
 
 Zanim zrobisz cokolwiek, przeczytaj:
 
