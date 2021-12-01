@@ -13,7 +13,7 @@ Dzięki temu możemy połączyć pythona z naszą bazą: https://www.oracle.com/
 
 4. W folderze *ProjektSQL* wykonaj komende: 
 
-    ***git clone https://github.com/tomaszpiescikowski/SQLWebApp.git***
+    `git clone https://github.com/tomaszpiescikowski/SQLWebApp.git`
 
 ### **Zanim zrobisz cokolwiek, przeczytaj:**
 
@@ -29,7 +29,7 @@ No i teraz masz już nasz projekt. Poogarniaj pliki, w środku jest parę koment
  
 - W folderze znajduje się plik ***requirements.txt***
 
-- Wykonaj komende python ***-m pip install -r requirements.txt***
+- Wykonaj komende `python -m pip install -r requirements.txt`
 
 Teraz masz zaistalowane wszystkie potrzebne aktualnie biblioteki i mamy dokładnie takie same środowiska.
 
@@ -40,10 +40,10 @@ Teraz możesz już produkować kodzik. Aktualizujemy wszystko przez gita.
 Zauważ że na naszym projekcie nie ma folderu *venv* - **nie wrzucamy go**.
 
 Ostrożnie z dodawaniem zmian, żeby się nic nie popsuło.
-Jak zrobisz zmiany w pliku, dodajesz go do stage'a -> ***git add 'plik'***
+Jak zrobisz zmiany w pliku, dodajesz go do stage'a -> `git add <plik>`
 
-Jak już masz wszystkie zmiany -> ***git commit -m "komentarz zmian"***
-na końcu -> git push
+Jak już masz wszystkie zmiany -> `git commit -m "<komentarz zmian>"`
+na końcu -> `git push`
 
 
 -------------
@@ -68,4 +68,3 @@ No i zmień sobie ustawienia clienta w ***\_\_init\_\_.py*** na swoje dane, żeb
 
 Możesz mieć równocześnie otwarty SQLDeveloper i sobie sprawdzać, że rzeczywiście wszystko się zmienia i działa jak należy. Te funkcje są oczywiście to dopracowania, ale póki co fajnie działają jaka komunikacja z bazą. 
 
-zmiana testowa
