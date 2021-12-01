@@ -67,3 +67,5 @@ A po co w ogóle ta konsola?
 No i zmień sobie ustawienia clienta w ***\_\_init\_\_.py*** na swoje dane, żeby ***bawić się na swoim koncie***. 
 
 Możesz mieć równocześnie otwarty SQLDeveloper i sobie sprawdzać, że rzeczywiście wszystko się zmienia i działa jak należy. Te funkcje są oczywiście to dopracowania, ale póki co fajnie działają jaka komunikacja z bazą. 
+
+zmiana testowa
