@@ -1,0 +1,12 @@
+### PROTECT FILES ###
+<FilesMatch "\.(htaccess|htpasswd|ini|fla|psd|log|sh)$">
+Order Allow,Deny
+Deny from all
+</FilesMatch>
+
+RewriteEngine on
+RewriteRule system-do-zarzadzania-baza-danych index.html
+RewriteRule kim-jestesmy kimjestesmy.html
+RewriteRule modyfikuj-liste-pracownikow pracownicy.html
+RewriteRule modyfikuj-liste-zwierzat zwierzeta.html
+RewriteRule kontakt-zoo-baza-danych kontakt.html
