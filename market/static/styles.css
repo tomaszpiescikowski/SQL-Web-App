@@ -204,6 +204,16 @@ a.tilelink
 }
 
 
+.row 
+{
+	margin: 20px 10px;
+}	
+
+.color
+{
+	display: inline-block;
+	margin: 400px 70px;
+}
 
 /*WERSJA TOMKA
 
