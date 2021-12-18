@@ -26,6 +26,7 @@ body
 	width: 960px;
 	margin: 20px;
 	text-align: center;
+	font-size: 15px;
 }
 
 .square
@@ -206,8 +207,29 @@ a.tilelink
 
 .row 
 {
+	margin: 0px 10px;
+	width: 900px;
+	/*height: 200px;*/
+	/*background-color: #222222;*/
+	float: left;
+	font-size: 15px;
+	/*color: #000000;
+	line-height: 40%;*/
+	text-align: center;
+	padding: 20px;
+}
+
+.wstep
+{
 	margin: 20px 10px;
-}	
+	/*background-color: #999999;
+	float: left;*/
+	font-size: 30px;
+	/*color: #000000;*/
+	text-align: center;
+	padding: 10px;
+}
+
 
 .color
 {
