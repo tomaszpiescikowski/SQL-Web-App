@@ -31,28 +31,22 @@
 		<main>
 			<article>
 				<form action="order.php" method="post">
-					
-					<div class="square">
-						<div class="tile1">
-							Dodaj zwierzę
-						</div>
-						<div class="tile2">
-							Usuń zwierzę
-						</div>
-						<div class="tile3">		
-							Przenieś zwierzę
-						</div>
-						<div style="clear:both;"></div>
-						<div class="square">
-						
-							<div class="tile5">
-								System do zarządzania bazy danych umożliwa dodanie, usunięcie lub przenoszenie dowolnego zwierzęcia lub pracownika oraz dokonywania zmian w ich opisach.
-							</div>
-							
-							<div class="row">
-							
+
+					<div class="wstep">
+						Wypełnij formularz, aby dodać nowe zwierzę.
+					</div>
+
+					<div class="row">
+						<label>Podaj swoje imię <input type="text" name="imie" placeholder="Jak masz na imię?"></label>
+						<label>Podaj hasło <input type="password" name="haslo"></label>
+						<!--<label>gdzie  <input type="search" name="fraza"</label>-->
+					</div>
+
+					<div class="row">
+
+
 								<fieldset> 
-									<legend>Wybierz gromadę</legend>
+									<legend> Wybierz gromadę zwierzęcia </legend>
 									
 									<div><label><input type="radio" value="1" name="gromada" checked>ssak</label></div>
 									<div><label><input type="radio" value="2"name="gromada">ptaki</label></div>
@@ -65,73 +59,53 @@
 							
 							</div>
 							
-							<div class="row">						
-								<label for="rodzina">Wybierz rodzinę</label>
-								<select id="rodzina">
-								
+							<div class="row">
+								<fieldset>
+								<!--<label for="rodzina">-->
+									<legend> Wybierz rodzinę zwierzęcia </legend>
+								<!--</label>-->
+
+								<select id="rodzina1">
 									<option value="koczkodanowate">koczkodanowate</option>
 									<option value="jeleniowate">jeleniowate</option>
 									<option value="kotowate" selected>kotowate</option>
 									<option value="psowate">psowate</option>
 								</select>
+								</fieldset>
 							</div>
-							
-						<div class="row">
-						</div>
-						
+
+					<div class="row">
 							<fieldset>
-							
-								<legend> Usun </legend>
+
+								<legend> Jaki rodzaj karmy będzie przyjmowało zwierzę </legend>
 								
 								<div class="col">
-									<div><label><input type="checkbox" name="wyp[] " value="1" disabled checked> klimatyzacja</label></div>
-									<div><label><input type="checkbox" name="wyp[] "value="1"> klimatyzacja</label></div>
-									<div><label><input type="checkbox" name="wyp[] value="2"> klimatyzacja</label></div>
-									<div><label><input type="checkbox" name="wyp[] value="3"> klimatyzacja</label></div>
-									<div><label><input type="checkbox" name="wyp[] value="4"> klimatyzacja</label></div>
+									<div><label><input type="checkbox" name="wyp[]" value="1" disabled checked> woda</label></div>
+									<div><label><input type="checkbox" name="wyp[]" value="1"> pasza</label></div>
+									<div><label><input type="checkbox" name="wyp[]" value="2"> mięso</label></div>
+									<div><label><input type="checkbox" name="wyp[]" value="3"> robaki</label></div>
+									<div><label><input type="checkbox" name="wyp[]" value="4"> mleko</label></div>
 								</div>
-								
-								<div class="col">
-									<div><label><input type="checkbox" name="wyp[] value="5"> klimatyzacja</label></div>
-									<div><label><input type="checkbox" name="wyp[] value="6"> klimatyzacja</label></div>
-									<div><label><input type="checkbox" name="wyp[] value="7"> klimatyzacja</label></div>
-									<div><label><input type="checkbox" name="wyp[] value="8"> klimatyzacja</label></div>
-									<div><label><input type="checkbox" name="wyp[] value="9"> klimatyzacja</label></div>
-								</div>
-								<div class="col">
-									<div><label><input type="checkbox" name="wyp[] value="10"> klimatyzacja</label></div>
-									<div><label><input type="checkbox" name="wyp[] value="11"> klimatyzacja</label></div>
-									<div><label><input type="checkbox" name="wyp[] value="12"> klimatyzacja</label></div>
-									<div><label><input type="checkbox" name="wyp[] value="13"> klimatyzacja</label></div>
-									<div><label><input type="checkbox" name="wyp[] value="14"> klimatyzacja</label></div>
-								</div>
-								
 							</fieldset>
-							
-							<div class="row">						
-								<label for="rodzina">Wybierz zwierze</label>
-								<div style="margin-top:10px;">
-									<select id="rodzina" name="zwierze" multiple size = 1>
-									
-										<option value="a">a</option>
-										<option value="b">b</option>
-										<option value="czosnek" selected>c</option>
-										<option value="d">d</option>
-									</select>
-								</div>
-							</div>
-							
-							<div class="row">
-							
-								<label>Imię <input type="text" name="imie" placeholder="Jak masz na imie?"</label>
-								<label>co <input type="password" name="haslo"</label>
-								<label>gdzie  <input type="search" name="fraza"</label>
-							
-							</div>
-							
-							<div class="row">
-								<label> Ile animalów <input type="number" name="ilosc" step="0.1"></label>
-							</div>
+					</div>
+					<div class="row">
+						<label>Podaj ilość karmy w kilogramach: <input type="number" name="ilosc" step="0.1"></label>
+					</div>
+
+					<div class="row">
+						<label for="rodzina">Kto jest właścicielem zwierzęcia?</label>
+						<div style="margin-top:10px;">
+							<select id="rodzina" name="zwierze">
+								<option value="a"  selected>Krystyna Ziombel</option>
+								<option value="b">Kowalski Piotr</option>
+								<option value="c">Aneta Różańska</option>
+								<option value="d">Jan Majonez</option>
+								<option value="d">Jan Bystry</option>
+								<option value="d">Jan Wielki</option>
+							</select>
+						</div>
+					</div>
+
 							
 							<div class="row">
 								<label> Ile zarcia <input type="number" step="1"></label>
