@@ -35,6 +35,23 @@ body
 	float: left;
 }
 
+.kafelek
+{
+	margin: 10px;
+	width: 190px;
+	height: 102px;
+	background-color: #445A1E;
+	float: left;
+	font-size: 27px;
+	text-align: center;
+	padding: 20px;
+}
+
+.kafelek:hover
+{
+	background-color: #334A0D;
+}
+
 #logo
 {
 	float: left;
@@ -44,6 +61,18 @@ body
 	text-align: left;
 	margin-bottom: 10px;
 	margin-top: 10px;
+	/*background-color: #2084c2;*/
+}
+
+#logo_new
+{
+	float: left;
+	font-family: 'Josefin Sans', sans-serif;
+	font-size: 90px;
+	width: 600px;
+	text-align: left;
+	margin-bottom: 10px;
+
 	/*background-color: #2084c2;*/
 }
 
@@ -73,6 +102,21 @@ body
 {
 	background-color: #1073b1;
 }
+
+.tile6
+{
+	margin: 10px;
+	width: 190px;
+	height: 102px;
+	background-color: #d94348;
+	float: left;
+	font-size: 35px;
+	text-align: center;
+	padding: 20px;
+}
+
+
+
 .tile2
 {
 	margin: 10px;
@@ -120,84 +164,14 @@ body
 
 }
 
-.tile5
+.zdjecia
 {
 	margin: 10px;
 	width: 420px;
-	height: 244px;
-	background-color: #666666;
-	font-size: 25px;
-	text-align: center;
-	padding: 30px;
+	height: 406px;
 }
 
-.yt
-{
-	margin: 10px;
-	width: 105px;
-	height: 142px;
-	background-color: #d94348;
-	float: left;
-	font-size: 50px;
-	text-align: center;
-	line-height: 40%;
-}
 
-.yt:hover
-{
-	background-color: #c83237;
-}
-
-.fb
-{
-	margin: 10px;
-	width: 105px;
-	height: 142px;
-	background-color: #4668b3;
-	float: left;
-	font-size: 50px;
-	text-align: center;
-	line-height: 40%;
-}
-
-.fb:hover
-{
-	background-color: #3557a2;
-}
-
-.gplus
-{
-	margin: 10px;
-	width: 105px;
-	height: 142px;
-	background-color: #d95333;
-	float: left;
-	font-size: 50px;
-	text-align: center;
-	line-height: 40%;
-}
-
-.gplus:hover
-{
-	background-color: #c84222;
-}
-
-.tw
-{
-	margin: 10px;
-	width: 105px;
-	height: 142px;
-	background-color: #3095d3;
-	float: left;
-	font-size: 50px;
-	text-align: center;
-	line-height: 40%;
-}
-
-.tw:hover
-{
-	background-color: #2084c2;
-}
 
 a.tilelink
 {
