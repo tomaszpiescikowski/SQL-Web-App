@@ -35,11 +35,32 @@ body
 	float: left;
 }
 
+.wybierz
+{
+	padding-left: 20px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	color: #ffffff;
+}
+
+.wybierz_podst
+{
+	text-align: center;
+}
+
+.tabela
+{
+	float: left;
+    padding-left: 40px;
+    padding-top: 5px;
+    color: #ffffff;
+	text-align: center;
+}
+
 .lewo_lista
 {
-	width: 240px;
+	width: 350px;
 	float: left;
-
 }
 
 .kafelek
@@ -62,13 +83,13 @@ body
 .nazwa_tab
 {
 	margin: 10px;
-	width: 190px;
-	height: 20px;
+	width: 350px;
+	height: 30px;
 	background-color: #bddddd;
 	float: left;
-	font-size: 20px;
+	font-size: 25px;
 	text-align: center;
-	padding: 5px 5px;
+	padding-top: 10px;
 	color: #000000;
 	font-family: 'Josefin Sans', sans-serif;
 	border: 10px dodgerblue;
@@ -102,7 +123,7 @@ body
 
 #logo_przeglad
 {
-	font-size: 40px;
+	font-size: 30px;
 }
 
 #zegar
