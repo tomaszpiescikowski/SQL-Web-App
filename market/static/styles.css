@@ -116,14 +116,17 @@ body
 	float: left;
 	font-family: 'Josefin Sans', sans-serif;
 	font-size: 90px;
-	width: 600px;
+	width: 550px;
 	text-align: left;
 	margin-bottom: 10px;
 }
 
 #logo_przeglad
 {
+    float: left;
 	font-size: 30px;
+    padding-top: 80px;
+    padding-bottom: 12px;
 }
 
 #zegar

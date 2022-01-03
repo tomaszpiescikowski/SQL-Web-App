@@ -30,7 +30,7 @@
             <a href="index.html" class="tilelink">Mini Zoo
             </a>
         </div>
-        <div id="logo_przeglad">EDYCJA DANYCH</div>
+        <div id="logo_przeglad">USUWANIE DANYCH</div>
         <!--<div id="zegar">13:00</div>-->
         <div style="clear:both;"></div>
     </div>
@@ -39,35 +39,22 @@
 
         <div class="wybierz">
             <fieldset>
-                <legend> Wybierz cechę, którą chcesz edytować: </legend>
-                <select id="kolumny">
-                    <option value="nazwa" selected>Nazwa zespołu</option>
-                    <option value="liczba_czlonkow">Liczba członków</option>
-                </select>
+                <legend> Zaznacz wiersze, które chcesz usunąć: </legend>
+                <div class="kolumny">
+                    <div><label><input type="checkbox" name="wyp[]" value="1">1</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="2">2</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="3">3</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="4">4</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="5">5</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="6">6</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="7">7</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="8">8</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="9">9</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="10">10</label></div>
+                </div>
             </fieldset>
             <br>
-            <fieldset>
-                <legend> Podaj nową wartość dla tej cechy </legend>
-                <input type="number" step="1">
-            </fieldset>
-            <br>
-            <fieldset>
-                <legend> Dodaj warunek: </legend>
-                <select id="wybrane_cechy">
-                    <option value="cecha1">Nazwa zespołu</option>
-                    <option value="cecha2">Liczba członków</option>
-                </select>
-                <select id="operator">
-                    <option value="operator1">></option>
-                    <option value="operator2"><</option>
-                    <option value="operator3">=</option>
-                    <option value="operator4">=<</option>
-                    <option value="operator5">=></option>
-                </select>
-                <input type="number" step="1">
-            </fieldset>
-            <br>
-            <input type="submit" value="Pokaż tabelę">
+            <input type="submit" value="Usuń wiersze">
         </div>
 
         <div style="clear:both;"></div>

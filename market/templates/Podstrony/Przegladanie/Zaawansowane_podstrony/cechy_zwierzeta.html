@@ -26,11 +26,11 @@
 
     <div class="rectangle">
         <div id="logo_new">
-            <img src="img/logo2.png" height=20% width=20% />
-            <a href="index.html" class="tilelink">Mini Zoo
-            </a>
+            <div id="logo_przeglad">
+                <img src="img/logo2.png" height=20% width=20% />
+                <a href="index.html" class="tilelink">PRZEGLĄD ZAAWANSOWANY</a>
+            </div>
         </div>
-        <div id="logo_przeglad">EDYCJA DANYCH</div>
         <!--<div id="zegar">13:00</div>-->
         <div style="clear:both;"></div>
     </div>
@@ -39,23 +39,34 @@
 
         <div class="wybierz">
             <fieldset>
-                <legend> Wybierz cechę, którą chcesz edytować: </legend>
-                <select id="kolumny">
-                    <option value="nazwa" selected>Nazwa zespołu</option>
-                    <option value="liczba_czlonkow">Liczba członków</option>
-                </select>
-            </fieldset>
-            <br>
-            <fieldset>
-                <legend> Podaj nową wartość dla tej cechy </legend>
-                <input type="number" step="1">
+                <legend> Wybierz cechy, które chcesz zobaczyć: </legend>
+                <div class="kolumny">
+                    <div><label><input type="checkbox" name="wyp[]" value="1">Identyfikator zwierzęcia</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="2">Pora karmienia</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="3">Ilość karmy</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="4">Wiek</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="5">Imie</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="6"> Właściciel</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="7">Gatunek</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="8">Rodzina</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="9">Gromada</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="10">Azyl</label></div>
+                </div>
             </fieldset>
             <br>
             <fieldset>
                 <legend> Dodaj warunek: </legend>
                 <select id="wybrane_cechy">
-                    <option value="cecha1">Nazwa zespołu</option>
-                    <option value="cecha2">Liczba członków</option>
+                    <option value="cecha1">Identyfikator zwierzęcia</option>
+                    <option value="cecha2">Pora karmienia</option>
+                    <option value="cecha3">Ilość karmy</option>
+                    <option value="cecha4">Wiek</option>
+                    <option value="cecha5">Imie</option>
+                    <option value="cecha6">Właściciel</option>
+                    <option value="cecha7">Gatunek</option>
+                    <option value="cecha8">Rodzina</option>
+                    <option value="cecha9">Gromada</option>
+                    <option value="cecha10">Azyl</option>
                 </select>
                 <select id="operator">
                     <option value="operator1">></option>
