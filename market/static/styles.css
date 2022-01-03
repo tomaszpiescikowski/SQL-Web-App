@@ -283,31 +283,23 @@ a.tilelink
 	padding: 25px;
 }
 
-.row 
+.pyt_formularz
 {
-	margin: 0px 10px;
-	width: 900px;
-	/*height: 200px;*/
-	/*background-color: #222222;*/
+	width: 100%;
 	float: left;
-	font-size: 15px;
-	/*color: #000000;
-	line-height: 40%;*/
-	text-align: center;
-	padding: 20px;
+	/*background-color: #3095d3;*/
+	padding-bottom: 15px;
+	padding-top: 15px;
 }
 
-.wstep
+.dodaj_dane_wstep
 {
-	width: 400px;
-	height: 200px;
-	margin: 20px 10px;
-	/*background-color: #999999;*/
+	width: 100%;
 	float: left;
 	font-size: 30px;
-	/*color: #000000;*/
 	text-align: center;
-	padding: 10px;
+	padding-bottom: 20px;
+	/*background-color: #ee5a32;*/
 }
 
 .color

@@ -37,11 +37,35 @@
 		<article>
 			<form action="order.php" method="post">
 				<div class="dodaj_dane_wstep">
-					Wypełnij formularz, aby dodać nową rodzinę.
+					Wypełnij formularz, aby dodać nowy obszar.
 				</div>
 				<div class="pyt_formularz">
 					<fieldset>
-						<legend>Podaj nazwę rodziny</legend>
+						<legend>Podaj nazwę obszaru</legend>
+						<label> <input type="text" required minlength="1" maxlength="50"> </label>
+					</fieldset>
+				</div>
+				<div class="pyt_formularz">
+					<fieldset>
+						<legend>Podaj powierzchnię obszaru</legend>
+						<label> <input type="number"> </label>
+					</fieldset>
+				</div>
+				<div class="pyt_formularz">
+					<fieldset>
+						<legend>Podaj godzinę otwarcia</legend>
+						<label> <input type="text" required minlength="1" maxlength="50"> </label>
+					</fieldset>
+				</div>
+				<div class="pyt_formularz">
+					<fieldset>
+						<legend>Podaj godzinę zamknięcia</legend>
+						<label> <input type="text" required minlength="1" maxlength="50"> </label>
+					</fieldset>
+				</div>
+				<div class="pyt_formularz">
+					<fieldset>
+						<legend>Możesz podać opis obszaru</legend>
 						<label> <input type="text" required minlength="1" maxlength="50"> </label>
 					</fieldset>
 				</div>
