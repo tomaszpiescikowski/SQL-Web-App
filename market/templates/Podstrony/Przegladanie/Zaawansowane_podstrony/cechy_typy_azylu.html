@@ -28,9 +28,7 @@
         <div id="logo_new">
             <div id="logo_przeglad">
                 <img src="img/logo2.png" height=20% width=20% />
-                <a href="index.html" class="tilelink">PRZEGLĄD ZAAWANSOWANY
-                <br></br>
-                Tu możesz wyświetlić konkretne cechy i określić odpowiednie warunki.</a>
+                <a href="index.html" class="tilelink">PRZEGLĄD ZAAWANSOWANY</a>
             </div>
         </div>
         <!--<div id="zegar">13:00</div>-->
@@ -38,80 +36,34 @@
     </div>
 
     <div class="lewo_lista">
+
         <div class="wybierz">
-            <div class="wybierz_podst">
-                Wybierz tabelę, którą chcesz zobaczyć:
-            </div>
+            <fieldset>
+                <legend> Wybierz cechy, które chcesz zobaczyć: </legend>
+                <div class="kolumny">
+                    <div><label><input type="checkbox" name="wyp[]" value="1">Nazwa typu azylu</label></div>
+                    <div><label><input type="checkbox" name="wyp[]" value="1">Opis azylu</label></div>
+                </div>
+            </fieldset>
+            <br>
+            <fieldset>
+                <legend> Dodaj warunek: </legend>
+                <select id="wybrane_cechy">
+                    <option value="cecha1">Nazwa typu azylu</option>
+                    <option value="cecha2">Opis azylu</option>
+                </select>
+                <select id="operator">
+                    <option value="operator1">></option>
+                    <option value="operator2"><</option>
+                    <option value="operator3">=</option>
+                    <option value="operator4">=<</option>
+                    <option value="operator5">=></option>
+                </select>
+                <input type="number" step="1">
+            </fieldset>
+            <br>
+            <input type="submit" value="Pokaż tabelę">
         </div>
-
-        <a href="Zaawansowane_podstrony/cechy_zwierzeta.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-giraffe"></i>ZWIERZĘTA
-            </div>
-        </a>
-
-        <div style="clear:both;"></div>
-        <a href="Zaawansowane_podstrony/cechy_gatunki.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>GATUNKI
-            </div>
-        </a>
-
-        <div style="clear:both;"></div>
-
-        <a href="Zaawansowane_podstrony/cechy_rodziny.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>RODZINY
-            </div>
-        </a>
-
-        <div style="clear:both;"></div>
-
-        <a href="Zaawansowane_podstrony/cechy_gromady.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>GROMADY
-            </div>
-        </a>
-
-        <div style="clear:both;"></div>
-
-        <a href="Zaawansowane_podstrony/cechy_karmy.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>KARMY
-            </div>
-        </a>
-
-        <div style="clear:both;"></div>
-
-        <a href="Zaawansowane_podstrony/cechy_pracownicy.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>PRACOWNICY
-            </div>
-        </a>
-
-        <div style="clear:both;"></div>
-
-        <a href="Zaawansowane_podstrony/cechy_zespoly.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>ZESPOŁY
-            </div>
-        </a>
-
-        <div style="clear:both;"></div>
-
-        <a href="Zaawansowane_podstrony/cechy_bilety.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>BILETY
-            </div>
-        </a>
-
-        <div style="clear:both;"></div>
-
-        <a href="Zaawansowane_podstrony/cechy_azyle.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>AZYLE
-            </div>
-        </a>
 
         <div style="clear:both;"></div>
     </div>
