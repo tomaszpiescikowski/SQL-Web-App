@@ -134,3 +134,14 @@ def insert_typ_azylu_page():
 def insert_typ_prac_page():
     return render_template('Podstrony/Formularze/f_typ_prac.html')
 
+
+
+
+# PODSTRONY PRZEGLĄDANIA DANYCH
+@app.route('/przegladanie_danych/przegladanie_podstawowe')
+def select_advanced_page():
+    return render_template('Podstrony/Przegladanie/zaawansowane.html')
+
+@app.route('/przegladanie_danych/przegladanie_zaawansowane')
+def select_basic_page():
+    return render_template('Podstrony/Przegladanie/podstawowe.html')
