@@ -145,3 +145,13 @@ def select_advanced_page():
 @app.route('/przegladanie_danych/przegladanie_zaawansowane')
 def select_basic_page():
     return render_template('Podstrony/Przegladanie/podstawowe.html')
+
+
+
+
+
+# PODSTRONY USUWANIA DANYCH
+@app.route('/usuwanie_danych/usuwanie_zwierzat')
+def delete_zwierze_page():
+    return render_template('Podstrony/Usuwanie/usun_zwierzeta.html')
+
