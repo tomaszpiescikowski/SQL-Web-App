@@ -83,3 +83,54 @@ def update_typ_prac_page():
     return render_template('Podstrony/Edycja/edycja_typ_prac.html')
 
 
+
+
+# PODSTRONY DODAWANIA DANYCH
+@app.route('/dodawanie_danych/formularz_azylu')
+def insert_azyl_page():
+    return render_template('Podstrony/Formularze/f_azyl.html')
+
+@app.route('/dodawanie_danych/formularz_biletu')
+def insert_bilet_page():
+    return render_template('Podstrony/Formularze/f_bilet.html')
+
+@app.route('/dodawanie_danych/formularz_gatunku')
+def insert_gatunek_page():
+    return render_template('Podstrony/Formularze/f_gatunek.html')
+
+@app.route('/dodawanie_danych/formularz_gromady')
+def insert_gromada_page():
+    return render_template('Podstrony/Formularze/f_gromada.html')
+
+@app.route('/dodawanie_danych/formularz_karmy')
+def insert_karma_page():
+    return render_template('Podstrony/Formularze/f_karma.html')
+
+@app.route('/dodawanie_danych/formularz_pawilonu')
+def insert_pawilon_page():
+    return render_template('Podstrony/Formularze/f_pawilon.html')
+
+@app.route('/dodawanie_danych/formularz_pracwonika')
+def insert_pracownik_page():
+    return render_template('Podstrony/Formularze/f_pracownik.html')
+
+@app.route('/dodawanie_danych/formularz_rodziny')
+def insert_rodzina_page():
+    return render_template('Podstrony/Formularze/f_rodzina.html')
+
+@app.route('/dodawanie_danych/formularz_zespolu')
+def insert_zespol_page():
+    return render_template('Podstrony/Formularze/f_zespol.html')
+
+@app.route('/dodawanie_danych/formularz_zwierzecia')
+def insert_zwierze_page():
+    return render_template('Podstrony/Formularze/f_zwierze.html')
+
+@app.route('/dodawanie_danych/formularz_typu_azylu')
+def insert_typ_azylu_page():
+    return render_template('Podstrony/Formularze/f_typ_azylu.html')
+
+@app.route('/dodawanie_danych/formularz_typu_pracownika')
+def insert_typ_prac_page():
+    return render_template('Podstrony/Formularze/f_typ_prac.html')
+
