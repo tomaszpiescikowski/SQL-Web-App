@@ -1,5 +1,3 @@
-from market import conn
-
 # list_of_parameters    <nazwy kolumn do selectu w postaci listy np. [id_prac, imie, nazwisko, etat, placa_pod...]>
 # table_name            <nazwa tabli np. pracownicy>
 # parameter_to_where    <WHERE parameter_to_where = ...>

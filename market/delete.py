@@ -1,5 +1,3 @@
-from market import conn
-
 # table_name              <ktora tabele usuwac>,
 # parameter_to_where      <WHERE parameter_to_where <sign> ...>,
 # sign                    <WHERE <parameter_to_where> >= 12>,

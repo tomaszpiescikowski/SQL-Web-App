@@ -1,5 +1,3 @@
-from market import conn
-
 # table_name            <ktora tabele updatowac?>,
 # parameter_to_set      <SET parameter_to_set = ...>,
 # value_to_set          <SET parameter_to_set = value_to_set...>,
