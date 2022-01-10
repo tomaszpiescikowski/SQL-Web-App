@@ -5,7 +5,40 @@
 # value_to_where        <WHERE parameter_to_where <= value_to_where>)
 # parameter_to_order    <ORDER BY parameter_to_order <value_to_order>>,
 # value_to_order        <rosnąco - ASC, malejąco - DESC>
+from re import A
+from market import conn
 
+def select_simple(select_statement):
+    try:
+        cur = conn.cursor()
+        cur.execute(select_statement)
+    except Exception as err:
+        print(f'{select_statement}\nBlad przy wykonywaniu funkcji select_simple: ', err)
+    else:
+        
+        list_of_results = cur.fetchall()
+        print(list_of_results)
+        lst = []
+        if list_of_results != []:
+            # if len(list_of_results[0]) == 1:
+            #     for i in list_of_results:
+            #         lst.append(str(i[0]))
+            #     return lst 
+
+            if len(list_of_results[0]) >= 1:
+                for elem in list_of_results:
+                    temp = []
+                    for i in elem: 
+                       temp.append(str(i))
+                    lst.append(temp)
+                return lst
+        else:
+            return "BRAK DANYCH"
+        
+
+        
+        
+        
 
 def select_from_oracle(list_of_parameters, table_name, parameter_to_where, sign, value_to_where, parameter_to_order, value_to_order):
     try:
@@ -56,9 +89,11 @@ def select_from_oracle(list_of_parameters, table_name, parameter_to_where, sign,
     else:
         print(f'Wyswietlanie danych powiodlo sie.\nWykonano polecenie {select_statement}\n')
         list_of_results = cur.fetchall()
-        for result in list_of_results:
-            print(*result)
-        conn.commit()
+        # for result in list_of_results:
+        #     print(*result)
+        # conn.commit()
+        print(list_of_results)
+        return list_of_results
     finally:
         cur.close()
 

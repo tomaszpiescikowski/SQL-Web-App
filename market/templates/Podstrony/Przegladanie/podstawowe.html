@@ -1,152 +1,114 @@
-<!DOCTYPE HTML>
-<html lang="pl">
-
-<head>
-    <meta charset="utf-8"/>
-    <title>Politechniczne Zoo</title>
-    <meta name="description" content="Witamy w naszym bajecznym ogrodzie zoologicznym!"/>
-    <meta name="keywords" content="zwierzeta, zwierze, zoo, ogrod, zoologiczny" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-
-    <!-- Nie wiem dlaczego, ale plik styles.css działa tylko ze ścieżką bezwględna -->
-    <link rel="stylesheet"href="{{ url_for('static', filename='styles.css') }}" type="text/css" />
-    <link rel="stylesheet" href="css/fontello.css" type="text/css" />
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Quicksand:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/fontello.css" type="text/css" />
-    <link href='http://fonts.googleapis.com/css?family=Lato|Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-
-    <script src="timer.js"></script>
-
-</head>
-
-<body onload="odliczanie();">
-
-<div id="container">
-
+{% include "base.html" %}
+<div class="back"><a href="{{ url_for('select_choose_page') }}" class="tilelink">WRÓĆ</a></div>
+<div id="container_select">
     <div class="rectangle">
         <div id="logo_new">
-            <div id="logo_przeglad">
-                <img src="{{ url_for('static', filename='img/logo2.png') }}" height=20% width=20% />
-                <a href="index.html" class="tilelink">PRZEGLĄD PODSTAWOWY</a>
-            </div>
+        <div id="logo_przeglad">
+            <a href="{{url_for('root_page')}}"><img src="{{ url_for('static', filename='img/logo2.png') }}" height=20% width=20% /></a>
+            <a href="{{ url_for('select_basic_page', tabela='brak') }}" class="tilelink">PRZEGLĄD PODSTAWOWY</a>
+           
         </div>
-        <!--<div id="zegar">13:00</div>-->
+        </div>
         <div style="clear:both;"></div>
     </div>
-
-    <div class="lewo_lista">
-        <div class="wybierz">
-            <div class="wybierz_podst">
-                Wybierz tabelę, którą chcesz zobaczyć:
-            </div>
+    <h2>Wybierz tabelę, którą chcesz zobaczyć:</h2>
+    <div class="to_flex">
+    <div class="lewo_lista_select">
+        <a href="{{ url_for('select_basic_page', tabela='ZWIERZETA') }}" class="tilelink">
+        <div class="nazwa_tab">
+            <i class="icon-giraffe"></i>ZWIERZĘTA
         </div>
-
-        <a href="Podstrony/dodaj.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-giraffe"></i>ZWIERZĘTA
-            </div>
         </a>
-
         <div style="clear:both;"></div>
-        <a href="Podstrony/przegladaj.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>GATUNKI
-            </div>
+        <a href="{{ url_for('select_basic_page', tabela='GATUNKI') }}" class="tilelink">
+        <div class="nazwa_tab">
+            <i class="icon-th-list"></i>GATUNKI
+        </div>
         </a>
-
         <div style="clear:both;"></div>
-
-        <a href="Podstrony/przegladaj.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>RODZINY
-            </div>
+        <a href="{{ url_for('select_basic_page', tabela='RODZINY') }}" class="tilelink">
+        <div class="nazwa_tab">
+            <i class="icon-th-list"></i>RODZINY
+        </div>
         </a>
-
         <div style="clear:both;"></div>
-
-        <a href="Podstrony/przegladaj.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>GROMADY
-            </div>
+        <a href="{{ url_for('select_basic_page', tabela='GROMADY') }}" class="tilelink">
+        <div class="nazwa_tab">
+            <i class="icon-th-list"></i>GROMADY
+        </div>
         </a>
-
         <div style="clear:both;"></div>
-
-        <a href="Podstrony/przegladaj.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>KARMY
-            </div>
+        <a href="{{ url_for('select_basic_page', tabela='KARMY') }}" class="tilelink">
+        <div class="nazwa_tab">
+            <i class="icon-th-list"></i>KARMY
+        </div>
         </a>
-
         <div style="clear:both;"></div>
-
-        <a href="Podstrony/przegladaj.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>PRACOWNICY
-            </div>
+        <a href="{{ url_for('select_basic_page', tabela='PRACOWNICY') }}" class="tilelink">
+        <div class="nazwa_tab">
+            <i class="icon-th-list"></i>PRACOWNICY
+        </div>
         </a>
-
         <div style="clear:both;"></div>
-
-        <a href="Podstrony/przegladaj.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>ZESPOŁY
-            </div>
+        <a href="{{ url_for('select_basic_page', tabela='ZESPOLY') }}" class="tilelink">
+        <div class="nazwa_tab">
+            <i class="icon-th-list"></i>ZESPOŁY
+        </div>
         </a>
-
         <div style="clear:both;"></div>
-
-        <a href="Podstrony/przegladaj.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>BILETY
-            </div>
+        <a href="{{ url_for('select_basic_page', tabela='BILETY') }}" class="tilelink">
+        <div class="nazwa_tab">
+            <i class="icon-th-list"></i>BILETY
+        </div>
         </a>
-
         <div style="clear:both;"></div>
-
-        <a href="Podstrony/przegladaj.html" class="tilelink">
-            <div class="nazwa_tab">
-                <i class="icon-th-list"></i>AZYLE
-            </div>
+        <a href="{{ url_for('select_basic_page', tabela='AZYLE') }}" class="tilelink">
+        <div class="nazwa_tab">
+            <i class="icon-th-list"></i>AZYLE
+        </div>
         </a>
-
         <div style="clear:both;"></div>
     </div>
 
     <div class="tabela">
-    <table>
-        <thead>
-        <tr> <th>Przedmiot <th>Nazwisko <th> Ocena <th> Przedmiot <th> Przedmiot <th> Przedmiot
-        <tbody>
-        <tr> <th> Historia <td> Nowak <td> 4+ <td> Historia <td> Historia<td> Historia
-        <tr> <th> Historia <td> Mazur <td> 3- <td> Historia <td> Historia<td> Historia
-        <tr> <th> Fizyka   <td> Nowak <td> 2 <td> Historia <td> Historia<td> Historia
-        <tr> <th> Fizyka   <td> Mazur <td> 4 <td> Historia <td> Historia<td> Historia
-        <tr> <th> Historia <td> Nowak <td> 4+ <td> Historia <td> Historia<td> Historia
-        <tr> <th> Historia <td> Mazur <td> 3- <td> Historia <td> Historia<td> Historia
-        <tr> <th> Fizyka   <td> Nowak <td> 2 <td> Historia <td> Historia<td> Historia
-        <tr> <th> Fizyka   <td> Mazur <td> 4 <td> Historia <td> Historia<td> Historia
-        <tr> <th> Historia <td> Nowak <td> 4+ <td> Historia <td> Historia<td> Historia
-        <tr> <th> Historia <td> Mazur <td> 3- <td> Historia <td> Historia<td> Historia
-        <tr> <th> Fizyka   <td> Nowak <td> 2 <td> Historia <td> Historia<td> Historia
-        <tr> <th> Fizyka   <td> Mazur <td> 4 <td> Historia <td> Historia<td> Historia
-        <tr> <th> Historia <td> Nowak <td> 4+ <td> Historia <td> Historia<td> Historia
-        <tr> <th> Historia <td> Mazur <td> 3- <td> Historia <td>Historia<td> Historia
-        <tr> <th> Fizyka   <td> Nowak <td> 2 <td> Historia <td> Historia<td> Historia
-        <tr> <th> Fizyka   <td> Mazur <td> 4 <td> Historia <td> Historia<td> Historia
-        <tr> <th> Historia <td> Nowak <td> 4+ <td> Historia <td> Historia<td> Historia
-        <tr> <th> Historia <td> Mazur <td> 3- <td> Historia <td> Historia<td> Historia
-        <tr> <th> Historia <td> Mazur <td> 3- <td> Historia <td> Historia<td> Historia
-    </table>
-    </div>
+        <table>
+        <tr>
+            {% if headings|length >= 5 %}
+                {% for header in headings %}
+                <th style="padding: 4px 4px; font-size: 20px;">{{ header }}</th>
+                {% endfor %}
+            {% else %}
+                {% for header in headings %}
+                <th style="padding: 8px 16px; font-size: 26px;">{{ header }}</th>
+                {% endfor %}
+            {% endif %}
+        </tr>
 
+        {% if headings|length >= 5 %}
+            {% for row in data %}
+            <tr>
+                {% for cell in row %}
+                <td style="padding: 4px 4px; font-size: 20px;">{{ cell }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        {% else %}
+            {% for row in data %}
+            <tr>
+                {% for cell in row %}
+                <td style="padding: 8px 16px; font-size: 26px;">{{ cell }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        {% endif %}
+
+
+       
+        </table>
+    </div>
     <div style="clear:both;"></div>
     <div class="rectangle">2021 &copy; Lena Ptak, Tomasz Pieścikowski <i class="icon-mail"></i> lena.ptak@student.put.poznan.pl, tomasz.piescikowski@student.put.poznan.pl</div>
-
+</div>
 </div>
 </body>
-
 </html>
-
-

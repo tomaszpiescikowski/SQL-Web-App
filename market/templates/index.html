@@ -1,6 +1,6 @@
+
 <!DOCTYPE HTML>
 <html lang="pl">
-
 <head>
     <meta charset="utf-8"/>
     <title>Politechniczne Zoo</title>
@@ -10,27 +10,24 @@
 
     <!-- Nie wiem dlaczego, ale plik styles.css działa tylko ze ścieżką bezwględna -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='font/fontello.css') }}" type="text/css" />
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='font/fontello.css') }}" type="text/css" /> -->
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Quicksand:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/fontello.css" type="text/css" />
     <link href='http://fonts.googleapis.com/css?family=Lato|Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-
     <script src="timer.js"></script>
-
 </head>
 
+
 <body onload="odliczanie();">
-
 <div id="container">
-
+    
     <div class="rectangle">
         <div id="logo_new">
             <img src="{{ url_for('static', filename='img/logo2.png') }}" height=20% width=20% />
             <a href="index.html" class="tilelink">Mini Zoo
             </a>
         </div>
-        <!--<div id="zegar">13:00</div>-->
         <div style="clear:both;"></div>
     </div>
 
@@ -77,41 +74,3 @@
 </body>
 
 </html>
-
-
-<!--STRONA TOMKA
-
-<!DOCTYPE html>
-<html lang="utf-8">
-<head>
-    <link rel="icon" type="image/png" href="https://img.icons8.com/office/16/000000/lion.png"/>
-    <link rel="icon" type="image/png" href="https://img.icons8.com/office/30/000000/lion.png"/>
-    <link rel="icon" type="image/png" href="https://img.icons8.com/office/40/000000/lion.png"/>
-    <link rel="icon" type="image/png" href="https://img.icons8.com/office/80/000000/lion.png"/>
-    <link rel="stylesheet" href="/static/styles.css">
-    <title>Mini ZOO</title>
-</head>
-<body>
-
-<div class="logo">
-    <h1>Mini ZOO</h1>
-    <img src="/static/img/logo2.png" alt="ZOO's logo">
-</div>
-
-<div class="container">
-    <button class="guziczek"><h1>Obszary ZOO</h1></button>
-    <button class="guziczek"><h1>Pawilony</h1></button>
-    <button class="guziczek"><h1>Zwierzeta</h1></button>
-    <button class="guziczek"><h1>Rosliny ZOO</h1></button>
-</div>
-
-<br>
-<br>
-<h1><a href="http://127.0.0.1:5000/strona_leny">Click!</a></h1>
-
-<a href="https://icons8.com/icon/60098/bear-footprint">Favicons source</a>
-
-</body>
-</html>
--->
-

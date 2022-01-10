@@ -1,119 +1,96 @@
-<!DOCTYPE HTML>
-<html lang="pl">
-
-
-<head>
-	<meta charset="utf-8"/>
-	<title>Politechniczne Zoo</title>
-	<meta name="description" content="Witamy w naszym bajecznym ogrodzie zoologicznym!"/>
-	<meta name="keywords" content="zwierzeta, zwierze, zoo, ogrod, zoologiczny" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-
-	<!-- Nie wiem dlaczego, ale plik styles.css działa tylko ze ścieżką bezwględna -->
-	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css" />
-	<link rel="stylesheet" href="css/fontello.css" type="text/css" />
-	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Quicksand:wght@300&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="css/fontello.css" type="text/css" />
-	<link href='http://fonts.googleapis.com/css?family=Lato|Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-</head>
-
-
+{% include "base.html" %}
 <body>
-<div id="container">
-
-	<div class="rectangle">
-		<div id="logo_new">
-			<img src="{{ url_for('static', filename='img/logo2.png') }}" height=20% width=20% />
-			<a href="index.html" class="tilelink">Mini Zoo
-			</a>
-		</div>
-		<div id="logo_przeglad">DODAWANIE DANYCH</div>
-		<!--<div id="zegar">13:00</div>-->
-		<div style="clear:both;"></div>
-	</div>
-
-	<main>
-		<article>
-			<form action="order.php" method="post">
-				<div class="dodaj_dane_wstep">
-					Wypełnij formularz, aby dodać nowe zwierzę.
-				</div>
-				<div class="pyt_formularz">
-					<fieldset>
-						<legend>Podaj identyfikator zwierzęcia</legend>
-						<label> <input type="number" step="1"> </label>
-					</fieldset>
-				</div>
-				<div class="pyt_formularz">
-					<fieldset>
-						<legend>Podaj gatunek zwierzęcia</legend>
-						<label><input type="text" required minlength="1" maxlength="50"></label>
-					</fieldset>
-				</div>
-
-				<div class="pyt_formularz">
-					<fieldset>
-						<legend>Podaj rodzinę zwierzęcia</legend>
-						<label> <input type="text" required minlength="1" maxlength="50"> </label>
-					</fieldset>
-				</div>
-				<div class="pyt_formularz">
-					<fieldset>
-						<legend>Podaj gromadę zwierzęcia</legend>
-						<label> <input type="text" required minlength="1" maxlength="50"> </label>
-					</fieldset>
-				</div>
-				<div class="pyt_formularz">
-					<fieldset>
-						<legend>Podaj wiek zwierzęcia</legend>
-						<label> <input type="number" step="1"> </label>
-					</fieldset>
-				</div>
-				<div class="pyt_formularz">
-					<fieldset>
-						<legend>Podaj identyfikator azylu</legend>
-						<label> <input type="number" step="1"> </label>
-					</fieldset>
-				</div>
-				<div class="pyt_formularz">
-					<fieldset>
-						<legend>Podaj nazwę karmy dla zwierzęcia</legend>
-						<label> <input type="text" required minlength="1" maxlength="50"> </label>
-					</fieldset>
-				</div>
-				<div class="pyt_formularz">
-					<fieldset>
-						<legend>Podaj ilość karmy dla zwierzęcia</legend>
-						<label> <input type="number" step="1"> </label>
-					</fieldset>
-				</div>
-				<div class="pyt_formularz">
-					<fieldset>
-						<legend>Podaj porę karmienia zwierzęcia</legend>
-						<label> <input type="text" required minlength="1" maxlength="50"> </label>
-					</fieldset>
-				</div>
-				<div class="pyt_formularz">
-					<fieldset>
-						<legend>Możesz podać imię dla zwierzęcia</legend>
-						<label> <input type="text" required minlength="1" maxlength="50"> </label>
-					</fieldset>
-				</div>
-				<div class="pyt_formularz">
-					<fieldset>
-						<legend>Możesz podać imię właściciela zwierzęcia</legend>
-						<label> <input type="text" required minlength="1" maxlength="50"> </label>
-					</fieldset>
-				</div>
-				<div class="pyt_formularz">
-					<input type="submit" value="Zatwierdź">
-				</div>
-				<div style="clear:both;"></div>
-				<div class="rectangle">2021 &copy; Tomasz Pieścikowski, Lena Ptak - System do zarządania bazą danych <i class="icon-mail"></i> lena.ptak@student.put.poznan.pl</div>
-			</form>
-		</article>
-	</main>
-</div>
+   <div id="container">
+      <div class="rectangle">
+         <div id="logo_new">
+            <img src="{{ url_for('static', filename='img/logo2.png') }}" height=20% width=20% />
+            <a href="index.html" class="tilelink">Mini Zoo
+            </a>
+         </div>
+         <div id="logo_przeglad">DODAWANIE DANYCH</div>
+         <!--<div id="zegar">13:00</div>-->
+         <div style="clear:both;"></div>
+      </div>
+      <main>
+         <article>
+            <form method="post">
+               <div class="dodaj_dane_wstep">
+                  Wypełnij formularz, aby dodać nowe zwierzę.
+               </div>
+               <div class="pyt_formularz">
+                  <fieldset>
+                     <legend>Podaj identyfikator zwierzęcia</legend>
+                     <label> <input type="text" name="identyfikator_zwierzecia"> </label>
+                  </fieldset>
+               </div>
+               <div class="pyt_formularz">
+                  <fieldset>
+                     <legend>Podaj gatunek zwierzęcia</legend>
+                     <label> <input type="text" name="gatunek"> </label>
+                  </fieldset>
+               </div>
+               <div class="pyt_formularz">
+                  <fieldset>
+                     <legend>Podaj rodzinę zwierzęcia</legend>
+                     <label> <input type="text" name="rodzina"> </label>
+                  </fieldset>
+               </div>
+               <div class="pyt_formularz">
+                  <fieldset>
+                     <legend>Podaj gromadę zwierzęcia</legend>
+                     <label> <input type="text" name="gromada"> </label>
+                  </fieldset>
+               </div>
+               <div class="pyt_formularz">
+                  <fieldset>
+                     <legend>Podaj wiek zwierzęcia</legend>
+                     <label> <input type="text" name="wiek"> </label>
+                  </fieldset>
+               </div>
+               <div class="pyt_formularz">
+                  <fieldset>
+                     <legend>Podaj identyfikator azylu</legend>
+                     <label> <input type="text" name="azyl"> </label>
+                  </fieldset>
+               </div>
+               <div class="pyt_formularz">
+                  <fieldset>
+                     <legend>Podaj nazwę karmy dla zwierzęcia</legend>
+                     <label> <input type="text" name="karma"> </label>
+                  </fieldset>
+               </div>
+               <div class="pyt_formularz">
+                  <fieldset>
+                     <legend>Podaj ilość karmy dla zwierzęcia</legend>
+                     <label> <input type="text" name="ilosc_karmy"> </label>
+                  </fieldset>
+               </div>
+               <div class="pyt_formularz">
+                  <fieldset>
+                     <legend>Podaj porę karmienia zwierzęcia</legend>
+                     <label> <input type="text" name="pora_karmienia"> </label>
+                  </fieldset>
+               </div>
+               <div class="pyt_formularz">
+                  <fieldset>
+                     <legend>Możesz podać imię dla zwierzęcia</legend>
+                     <label> <input type="text" name="imie"> </label>
+                  </fieldset>
+               </div>
+               <div class="pyt_formularz">
+                  <fieldset>
+                     <legend>Możesz podać imię właściciela zwierzęcia</legend>
+                     <label> <input type="text" name="wlasciciel"> </label>
+                  </fieldset>
+               </div>
+               <div class="pyt_formularz">
+                  <input class="button" type="submit" formaction="/insert" value="Wstaw dane!">
+               </div>
+               <div style="clear:both;"></div>
+               <div class="rectangle">2021 &copy; Tomasz Pieścikowski, Lena Ptak - System do zarządania bazą danych <i class="icon-mail"></i> lena.ptak@student.put.poznan.pl</div>
+            </form>
+         </article>
+      </main>
+   </div>
 </body>
 </html>

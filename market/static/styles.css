@@ -20,6 +20,24 @@ body
 	margin-left: auto;
 	margin-right: auto;
 }
+#container_select
+{
+	zoom: 90%;
+	width: 1400px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.back {
+	font-size: 25px; 
+	float: right;
+	position: absolute;
+	right: 150px;
+	top: 150px;
+	background-color: #c2731a;
+	padding: 10px 30px;
+	border-radius: 20px;
+}
 
 .rectangle
 {
@@ -50,11 +68,42 @@ body
 
 .tabela
 {
-	float: left;
+	/* float: left; */
+    /* padding-left: 40px; */
+    padding-top: 20px;
+	margin-top: 30px;
+    color: #ffffff;
+	text-align: center;
+}
+
+/* .tabela
+{
     padding-left: 40px;
     padding-top: 5px;
     color: #ffffff;
 	text-align: center;
+	left: 40%;
+	bottom:550px;
+} */
+
+
+.to_flex {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+}
+
+.lewo_lista_select
+{
+	/* width: 350px;
+	float: left; */
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
 }
 
 .lewo_lista
@@ -83,7 +132,7 @@ body
 .nazwa_tab
 {
 	margin: 10px;
-	width: 350px;
+	width: 200px;
 	height: 30px;
 	background-color: #bddddd;
 	float: left;

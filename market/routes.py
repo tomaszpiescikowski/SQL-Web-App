@@ -1,4 +1,4 @@
-from market import app
+from market import app, select, insert
 from flask import render_template, request, url_for, redirect, flash, get_flashed_messages
 
 """
@@ -122,9 +122,79 @@ def insert_rodzina_page():
 def insert_zespol_page():
     return render_template('Podstrony/Formularze/f_zespol.html')
 
+
+
 @app.route('/dodawanie_danych/formularz_zwierzecia')
 def insert_zwierze_page():
     return render_template('Podstrony/Formularze/f_zwierze.html')
+
+@app.route('/insert', methods=["POST", "GET"])
+def insertion():
+    if request.method == 'POST':
+        form = request.form
+        identyfikator_zwierzecia = int(form['identyfikator_zwierzecia'])
+        pora_karmienia = str(form['pora_karmienia'])
+        ilosc_karmy = float(form['ilosc_karmy'])
+        wiek = int(form['wiek'])
+        imie = str(form['imie'])
+        wlasciciel = str(form['wlasciciel'])
+        karma = str(form['karma'])
+        gatunek = str(form['gatunek'])
+        rodzina = str(form['rodzina'])
+        gromada = str(form['gromada'])
+        azyl = int(form['azyl'])
+
+        print(  "Wstawiam do: ZWIERZETA",
+                identyfikator_zwierzecia,
+                pora_karmienia,
+                ilosc_karmy,
+                wiek,
+                imie,
+                wlasciciel,
+                karma,
+                gatunek,
+                rodzina,
+                gromada,
+                azyl)
+        
+        insert.insert_into_oracle('ZWIERZETA', 
+        [
+            'identyfikator_zwierzecia', 
+            'pora_karmienia', 
+            'ilosc_karmy', 
+            'wiek', 
+            'imie', 
+            'wlasciciel',
+            'karma',
+            'gatunek',
+            'rodzina',
+            'gromada',
+            'azyl'
+        ], 
+        [
+            identyfikator_zwierzecia,
+            pora_karmienia,
+            ilosc_karmy,
+            wiek,
+            imie,
+            wlasciciel,
+            karma,
+            gatunek,
+            rodzina,
+            gromada,
+            azyl
+        ] 
+    )
+
+        return render_template('Podstrony/Formularze/f_zwierze.html')
+    
+    return redirect('Podstrony/Formularze/f_zwierze.html')
+
+
+       
+        
+
+
 
 @app.route('/dodawanie_danych/formularz_typu_azylu')
 def insert_typ_azylu_page():
@@ -138,13 +208,33 @@ def insert_typ_prac_page():
 
 
 # PODSTRONY PRZEGLĄDANIA DANYCH
-@app.route('/przegladanie_danych/przegladanie_podstawowe')
-def select_advanced_page():
-    return render_template('Podstrony/Przegladanie/zaawansowane.html')
-
+# 10.01.2022 TOMASZ P.
 @app.route('/przegladanie_danych/przegladanie_zaawansowane')
+def select_advanced_page():
+    nazwa_tabeli_do_wyswietlenia = request.args.get('tabela', default='brak', type=str)
+    if nazwa_tabeli_do_wyswietlenia != 'brak':
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT * FROM {nazwa_tabeli_do_wyswietlenia.upper()}")
+        naglowki_tabeli_do_wyswietlenia = select.select_simple(f"SELECT COLUMN_NAME FROM USER_TAB_COLUMNS WHERE TABLE_NAME = '{nazwa_tabeli_do_wyswietlenia.upper()}'")
+        if dane_tabeli_do_wyswietlenia == [] or dane_tabeli_do_wyswietlenia == "BRAK DANYCH":
+            dane_tabeli_do_wyswietlenia = [["--" for i in range(len(naglowki_tabeli_do_wyswietlenia))]]
+        naglowki_tabeli_do_wyswietlenia = [i[0] for i in naglowki_tabeli_do_wyswietlenia]
+        return render_template('Podstrony/Przegladanie/zaawansowane.html', headings=naglowki_tabeli_do_wyswietlenia, data=dane_tabeli_do_wyswietlenia)
+    else:
+        return render_template('Podstrony/Przegladanie/zaawansowane.html', headings=[], data=[])
+
+# 10.01.2022 TOMASZ P.
+@app.route('/przegladanie_danych/przegladanie_podstawowe')
 def select_basic_page():
-    return render_template('Podstrony/Przegladanie/podstawowe.html')
+    nazwa_tabeli_do_wyswietlenia = request.args.get('tabela', default='brak', type=str)
+    if nazwa_tabeli_do_wyswietlenia != 'brak':
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT * FROM {nazwa_tabeli_do_wyswietlenia.upper()}")
+        naglowki_tabeli_do_wyswietlenia = select.select_simple(f"SELECT COLUMN_NAME FROM USER_TAB_COLUMNS WHERE TABLE_NAME = '{nazwa_tabeli_do_wyswietlenia.upper()}'")
+        if dane_tabeli_do_wyswietlenia == [] or dane_tabeli_do_wyswietlenia == "BRAK DANYCH":
+            dane_tabeli_do_wyswietlenia = [["--" for i in range(len(naglowki_tabeli_do_wyswietlenia))]]
+        naglowki_tabeli_do_wyswietlenia = [i[0] for i in naglowki_tabeli_do_wyswietlenia]
+        return render_template('Podstrony/Przegladanie/podstawowe.html', headings=naglowki_tabeli_do_wyswietlenia, data=dane_tabeli_do_wyswietlenia)
+    else:
+        return render_template('Podstrony/Przegladanie/podstawowe.html', headings=[], data=[])
 
 
 

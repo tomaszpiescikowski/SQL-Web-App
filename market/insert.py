@@ -1,7 +1,7 @@
 # table_name            <nazwa tabli np. pracownicy>
 # list_of_parameters    <nazwy kolumn do insertu w postaci listy np. [id_prac, imie, nazwisko, etat, placa_pod...]>
 # list_of_arguments     <wartości do wpisania w kolumny z list_of_parameters np. [23, 'jan', 'brzechwa', 'pisarz'...]>
-
+from market import conn
 
 def insert_into_oracle(table_name, list_of_parameters, list_of_arguments):
     try:
