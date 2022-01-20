@@ -11,81 +11,51 @@
          <!--<div id="zegar">13:00</div>-->
          <div style="clear:both;"></div>
       </div>
+
       <main>
          <article>
             <form method="post">
-               <div class="dodaj_dane_wstep">
-                  Wypełnij formularz, aby dodać nowe zwierzę.
-               </div>
-               <div class="pyt_formularz">
-                  <fieldset>
-                     <legend>Podaj identyfikator zwierzęcia</legend>
-                     <label> <input type="text" name="identyfikator_zwierzecia"> </label>
-                  </fieldset>
-               </div>
-               <div class="pyt_formularz">
-                  <fieldset>
-                     <legend>Podaj gatunek zwierzęcia</legend>
-                     <label> <input type="text" name="gatunek"> </label>
-                  </fieldset>
-               </div>
-               <div class="pyt_formularz">
-                  <fieldset>
-                     <legend>Podaj rodzinę zwierzęcia</legend>
-                     <label> <input type="text" name="rodzina"> </label>
-                  </fieldset>
-               </div>
-               <div class="pyt_formularz">
-                  <fieldset>
-                     <legend>Podaj gromadę zwierzęcia</legend>
-                     <label> <input type="text" name="gromada"> </label>
-                  </fieldset>
-               </div>
-               <div class="pyt_formularz">
-                  <fieldset>
-                     <legend>Podaj wiek zwierzęcia</legend>
-                     <label> <input type="text" name="wiek"> </label>
-                  </fieldset>
-               </div>
-               <div class="pyt_formularz">
-                  <fieldset>
-                     <legend>Podaj identyfikator azylu</legend>
-                     <label> <input type="text" name="azyl"> </label>
-                  </fieldset>
-               </div>
-               <div class="pyt_formularz">
-                  <fieldset>
-                     <legend>Podaj nazwę karmy dla zwierzęcia</legend>
-                     <label> <input type="text" name="karma"> </label>
-                  </fieldset>
-               </div>
-               <div class="pyt_formularz">
-                  <fieldset>
-                     <legend>Podaj ilość karmy dla zwierzęcia</legend>
-                     <label> <input type="text" name="ilosc_karmy"> </label>
-                  </fieldset>
-               </div>
-               <div class="pyt_formularz">
-                  <fieldset>
-                     <legend>Podaj porę karmienia zwierzęcia</legend>
-                     <label> <input type="text" name="pora_karmienia"> </label>
-                  </fieldset>
-               </div>
-               <div class="pyt_formularz">
-                  <fieldset>
-                     <legend>Możesz podać imię dla zwierzęcia</legend>
-                     <label> <input type="text" name="imie"> </label>
-                  </fieldset>
-               </div>
-               <div class="pyt_formularz">
-                  <fieldset>
-                     <legend>Możesz podać imię właściciela zwierzęcia</legend>
-                     <label> <input type="text" name="wlasciciel"> </label>
-                  </fieldset>
-               </div>
-               <div class="pyt_formularz">
-                  <input class="button" type="submit" formaction="/insert" value="Wstaw dane!">
-               </div>
+               {{ form.hidden_tag() }}
+               {{ form.IDENTYFIKATOR_ZWIERZECIA.label(class="form-label") }}
+               {{ form.IDENTYFIKATOR_ZWIERZECIA(class="form-control") }}
+               <br>
+               {{ form.hidden_tag() }}
+               {{ form.GATUNEK.label(class="form-label") }}
+               {{ form.GATUNEK(class="form-control") }}
+               <br>
+               {{ form.hidden_tag() }}
+               {{ form.RODZINA.label(class="form-label") }}
+               {{ form.RODZINA(class="form-control") }}
+               <br>
+               {{ form.hidden_tag() }}
+               {{ form.GROMADA.label(class="form-label") }}
+               {{ form.GROMADA(class="form-control") }}
+               <br>
+               {{ form.hidden_tag() }}
+               {{ form.IMIE.label(class="form-label") }}
+               {{ form.IMIE(class="form-control") }}
+               <br>
+               {{ form.hidden_tag() }}
+               {{ form.WLASCICIEL.label(class="form-label") }}
+               {{ form.WLASCICIEL(class="form-control") }}
+               <br>
+               {{ form.hidden_tag() }}
+               {{ form.KARMA.label(class="form-label") }}
+               {{ form.KARMA(class="form-control") }}
+               <br>
+               {{ form.hidden_tag() }}
+               {{ form.ILOSC_KARMY.label(class="form-label") }}
+               {{ form.ILOSC_KARMY(class="form-control") }}
+               <br>
+               {{ form.hidden_tag() }}
+               {{ form.PORA_KARMIENIA.label(class="form-label") }}
+               {{ form.PORA_KARMIENIA(class="form-control") }}
+               <br>
+               {{ form.hidden_tag() }}
+               {{ form.AZYL.label(class="form-label") }}
+               {{ form.AZYL(class="form-control") }}
+               <br>
+               {{ form.submit(class="btn btn-primary") }}
                <div style="clear:both;"></div>
                <div class="rectangle">2021 &copy; Tomasz Pieścikowski, Lena Ptak - System do zarządania bazą danych <i class="icon-mail"></i> lena.ptak@student.put.poznan.pl</div>
             </form>

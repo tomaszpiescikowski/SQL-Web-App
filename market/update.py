@@ -1,9 +1,11 @@
-# table_name            <ktora tabele updatowac?>,
+# table_name            <która tabele updatowac?>,
 # parameter_to_set      <SET parameter_to_set = ...>,
 # value_to_set          <SET parameter_to_set = value_to_set...>,
 # parameter_to_where    <WHERE parameter_to_where = ...>,
-# sign                  <znak pomiedzy parametrem WHERE a wartoscia>
+# sign                  <znak pomiędzy parametrem WHERE a wartością>
 # value_to_where        <WHERE parameter_to_where = value_to_where>)
+
+from market import conn
 
 
 def update_to_oracle_with_where(table_name, parameter_to_set, value_to_set, parameter_to_where, sign, value_to_where):

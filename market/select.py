@@ -5,6 +5,7 @@
 # value_to_where        <WHERE parameter_to_where <= value_to_where>)
 # parameter_to_order    <ORDER BY parameter_to_order <value_to_order>>,
 # value_to_order        <rosnąco - ASC, malejąco - DESC>
+
 from re import A
 from market import conn
 

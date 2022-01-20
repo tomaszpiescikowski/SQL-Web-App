@@ -2,7 +2,7 @@
 # parameter_to_where      <WHERE parameter_to_where <sign> ...>,
 # sign                    <WHERE <parameter_to_where> >= 12>,
 # value_to_where          <WHERE parameter_to_where <sign>> value_to_where>)
-
+from market import conn
 
 def delete_from_oracle_with_where(table_name, parameter_to_where, sign, value_to_where):
     try:
