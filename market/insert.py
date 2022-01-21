@@ -38,12 +38,11 @@ def insert_into_oracle(table_name, list_of_parameters, list_of_arguments):
         cur.execute(insert_statement)
 
     except Exception as err:
-        print(f'{insert_statement}\nBlad przy wykonywaniu funkcji insert_into_oracle: ', err)
+        print(f'Blad przy wykonywaniu funkcji insert_into_oracle', err)
 
     else:
         print(f'Wstawianie danych powiodlo sie.\nWykonano polecenie {insert_statement}\n')
         conn.commit()
-    finally:
-        cur.close()
+        cur.close()        
 
 

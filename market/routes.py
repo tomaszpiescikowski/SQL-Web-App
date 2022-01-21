@@ -1,3 +1,5 @@
+from email import message
+from wsgiref import validate
 from market import app, select, insert
 from flask import render_template, request, url_for, redirect, flash, get_flashed_messages
 
@@ -132,123 +134,171 @@ app.config['SECRET_KEY'] = 'secretkey'
 class WstawZwierze(FlaskForm):
     IDENTYFIKATOR_ZWIERZECIA = IntegerField(label="Podaj identyfikator zwierzęcia", 
                                            description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired()]
+                                           validators=[DataRequired(), NoneOf([10, 20, 30, 40], "Ten identyfikator jest zajęty.")]
                                            )
     PORA_KARMIENIA = StringField(label="Podaj porę karmienia zwierzęcia", 
                                            description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), Length(min=1, max=20, message="Wymagana dlugosc to przedzial od 1 do 20 znakow.")]
+                                           validators=[DataRequired(), Length(min=4, max=20)]
                                            )
     ILOSC_KARMY = FloatField(label="Podaj ilość karmy dla zwierzęcia", 
                                            description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired()]
+                                           validators=[DataRequired(message='Wpisz liczbę rzeczywistą, np: 10.3')]
                                            )
     WIEK = IntegerField(label="Podaj wiek zwierzęcia", 
                                            description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), NumberRange(min=1, message="Ta wartosc musi byc wieksza niz 0")]
+                                           validators=[DataRequired(), NumberRange(min=1, max=200)]
                                            )
     IMIE = StringField(label="Podaj imie zwierzęcia", 
                                            description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), Length(min=1, max=50)]
-                                           )                                    
+                                           validators=[DataRequired(), Length(min=3, max=50)]
+                                           )                                 
     WLASCICIEL = StringField(label="Podaj imie wlasciciela zwierzęcia", 
                                            description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), Length(min=1, max=50)]
-                                           )   
-    KARMA = StringField(label="Podaj nazwe karmy zwierzęcia", 
-                                           description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), Length(min=1, max=50)]
-                                           )                                          
-    GATUNEK = StringField(label="Podaj gatunek zwierzęcia", 
-                                           description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), Length(min=1, max=50)]
+                                           validators=[DataRequired(), Length(min=3, max=50)]
                                            )
-    RODZINA = StringField(label="Podaj rodzine zwierzęcia", 
-                                           description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), Length(min=1, max=50)]
-                                           )                                      
-    GROMADA = StringField(label="Podaj gromade zwierzęcia", 
-                                           description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), Length(min=1, max=50)]
-                                           )
-    AZYL = IntegerField(label="Podaj azyl zwierzęcia", 
-                                           description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), NumberRange(min=1, message="Ta wartosc musi byc wieksza niz 0")]
-                                           )                                      
-    submit = SubmitField("Dodaj zwierze do zoo")
+    KARMA = SelectField(label='Wybierz karmę zwierzęcia', 
+                                            coerce=str,
+                                            validators=[DataRequired()]
+                                            )
+    GATUNEK = SelectField(label='Wybierz gatunek zwierzęcia', 
+                                            coerce=str,
+                                            validators=[DataRequired()]
+                                            )
+    RODZINA = SelectField(label='Wybierz rodzinę zwierzęcia', 
+                                            coerce=str,
+                                            validators=[DataRequired()]
+                                            )
+    GROMADA = SelectField(label='Wybierz gromadę zwierzęcia', 
+                                            coerce=str,
+                                            validators=[DataRequired()]
+                                            )
+    AZYL = SelectField(label='Wybierz azyl zwierzęcia', 
+                                            coerce=int,
+                                            validators=[DataRequired()]
+                                            )
+    submit = SubmitField("Dodaj!")
+
+
 
 @app.route('/dodawanie_danych/formularz_zwierzecia', methods = ['GET', 'POST'])
 def insert_zwierze_page():
-    if request.method == 'GET':
-        IDENTYFIKATOR_ZWIERZECIA = None
-        PORA_KARMIENIA = None
-        ILOSC_KARMY = None
-        WIEK = None
-        IMIE = None
-        WLASCICIEL = None
-        KARMA = None
-        GATUNEK = None
-        RODZINA = None
-        GROMADA = None
-        AZYL = None
+    form = WstawZwierze(request.form)
+    IDENTYFIKATOR_ZWIERZECIA = None
+    PORA_KARMIENIA = None
+    ILOSC_KARMY = None
+    WIEK = None
+    IMIE = None
+    WLASCICIEL = None
+    KARMA = None
+    GATUNEK = None
+    RODZINA = None
+    GROMADA = None
+    AZYL = None
+    #pomocnicze
+    IDENTYFIKATOR_AZYLU_LISTA = [elem[0] for elem in select.select_simple('SELECT IDENTYFIKATOR_AZYLU FROM AZYLE')]
+    NAZWA_AZYLU_LISTA = [elem[0] for elem in select.select_simple('SELECT NAZWA_AZYLU FROM AZYLE')]
+    NONE_OF_ID = [elem[0] for elem in select.select_simple('SELECT IDENTYFIKATOR_ZWIERZECIA FROM ZWIERZETA')]
+    #głowne
+    NAZWA_GATUNKU_LISTA = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA_GATUNKU FROM GATUNKI')]
+    NAZWA_KARMY_LISTA = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA_KARMY FROM KARMY')]
+    NAZWA_GROMADY_LISTA = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA_GROMADY FROM GROMADY')]
+    NAZWA_RODZINY_LISTA = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA_RODZINY FROM RODZINY')]
+    AZYLE_LISTA = [(IDENTYFIKATOR_AZYLU_LISTA[i], NAZWA_AZYLU_LISTA[i]) for i in range(len(IDENTYFIKATOR_AZYLU_LISTA))]
 
-        form = WstawZwierze()
+    
+    form.KARMA.choices = NAZWA_KARMY_LISTA
+    form.RODZINA.choices = NAZWA_RODZINY_LISTA
+    form.GATUNEK.choices = NAZWA_GATUNKU_LISTA
+    form.GROMADA.choices = NAZWA_GROMADY_LISTA
+    form.AZYL.choices = AZYLE_LISTA
 
-        if form.validate_on_submit():
-            IDENTYFIKATOR_ZWIERZECIA = form.IDENTYFIKATOR_ZWIERZECIA.data
-            PORA_KARMIENIA = form.PORA_KARMIENIA.data
-            ILOSC_KARMY = form.ILOSC_KARMY.data
-            WIEK = form.WIEK.data
-            IMIE = form.IMIE.data
-            WLASCICIEL = form.WLASCICIEL.data
-            KARMA = form.KARMA.data
-            GATUNEK = form.GATUNEK.data
-            RODZINA = form.RODZINA.data
-            GROMADA = form.GROMADA.data
-            AZYL = form.AZYL.data
+    if request.method == 'POST' and form.validate_on_submit():
+        flash('Dodano nowe zwierze!')
 
-            # insert.insert_into_oracle('ZWIERZETA', 
-            # [
-            #     "IDENTYFIKATOR_ZWIERZECIA",
-            #     "PORA_KARMIENIA",
-            #     "ILOSC_KARMY",
-            #     "WIEK",
-            #     "IMIE",
-            #     "WLASCICIEL",
-            #     "KARMA",
-            #     "GATUNEK",
-            #     "RODZINA",
-            #     "GROMADA",
-            #     "AZYL"
-            # ], 
-            # [
-            #     IDENTYFIKATOR_ZWIERZECIA,
-            #     PORA_KARMIENIA,
-            #     ILOSC_KARMY,
-            #     WIEK,
-            #     IMIE,
-            #     WLASCICIEL,
-            #     KARMA,
-            #     GATUNEK,
-            #     RODZINA,
-            #     GROMADA,
-            #     AZYL
-            # ] 
-            # )
+        #########################
+        IDENTYFIKATOR_ZWIERZECIA = form.IDENTYFIKATOR_ZWIERZECIA.data
+        PORA_KARMIENIA = form.PORA_KARMIENIA.data
+        ILOSC_KARMY = form.ILOSC_KARMY.data
+        WIEK = form.WIEK.data
+        IMIE = form.IMIE.data
+        WLASCICIEL = form.WLASCICIEL.data
+        KARMA = form.KARMA.data
+        GATUNEK = form.GATUNEK.data
+        RODZINA = form.RODZINA.data
+        GROMADA = form.GROMADA.data
+        AZYL = form.AZYL.data
+
+        print(IDENTYFIKATOR_ZWIERZECIA,
+            PORA_KARMIENIA,
+            ILOSC_KARMY,
+            WIEK,
+            IMIE,
+            WLASCICIEL,
+            KARMA,
+            GATUNEK,
+            RODZINA,
+            GROMADA,
+            AZYL)
+        
+        print(type(IDENTYFIKATOR_ZWIERZECIA),
+            type(PORA_KARMIENIA),
+            type(ILOSC_KARMY),
+            type(WIEK),
+            type(IMIE),
+            type(WLASCICIEL),
+            type(KARMA),
+            type(GATUNEK),
+            type(RODZINA),
+            type(GROMADA),
+            type(AZYL))
+
+        insert.insert_into_oracle('ZWIERZETA', 
+            [
+                "IDENTYFIKATOR_ZWIERZECIA",
+                "PORA_KARMIENIA",
+                "ILOSC_KARMY",
+                "WIEK",
+                "IMIE",
+                "WLASCICIEL",
+                "KARMA",
+                "GATUNEK",
+                "RODZINA",
+                "GROMADA",
+                "AZYL"
+            ], 
+            [
+                IDENTYFIKATOR_ZWIERZECIA,
+                PORA_KARMIENIA,
+                ILOSC_KARMY,
+                WIEK,
+                IMIE,
+                WLASCICIEL,
+                KARMA,
+                GATUNEK,
+                RODZINA,
+                GROMADA,
+                AZYL
+            ] 
+            )
+
+        form.IDENTYFIKATOR_ZWIERZECIA.data = ""
+        form.PORA_KARMIENIA.data = ""
+        form.ILOSC_KARMY.data = ""
+        form.WIEK.data = ""
+        form.IMIE.data = ""
+        form.WLASCICIEL.data = ""
+        form.KARMA.data = ""
+        form.GATUNEK.data = ""
+        form.RODZINA.data = ""
+        form.GROMADA.data = ""
+        form.AZYL.data = ""
+        #########################
+
+        return redirect(url_for('insert_zwierze_page'))
 
 
-            form.IDENTYFIKATOR_ZWIERZECIA.data = ""
-            form.PORA_KARMIENIA.data = ""
-            form.ILOSC_KARMY.data = ""
-            form.WIEK.data = ""
-            form.IMIE.data = ""
-            form.WLASCICIEL.data = ""
-            form.KARMA.data = ""
-            form.GATUNEK.data = ""
-            form.RODZINA.data = ""
-            form.GROMADA.data = ""
-            form.AZYL.data = ""
-            
-        return render_template('Podstrony/Formularze/f_zwierze.html',
+
+    return render_template('Podstrony/Formularze/f_zwierze.html',
                                 IDENTYFIKATOR_ZWIERZECIA = IDENTYFIKATOR_ZWIERZECIA,
                                 PORA_KARMIENIA = PORA_KARMIENIA,
                                 ILOSC_KARMY = ILOSC_KARMY,
@@ -263,7 +313,90 @@ def insert_zwierze_page():
                                 form = form
                                 )
 
-    return redirect(url_for('insert_zwierze_page'))
+# @app.route('/dodawanie_danych/formularz_zwierzecia', methods = ['GET', 'POST'])
+# def insert_zwierze_page():
+    
+
+    
+#     print(form.validate())
+#     flash(form.errors)
+#     if form.validate_on_submit():
+#         print(11111111111111111111111111111111)
+#         IDENTYFIKATOR_ZWIERZECIA = form.IDENTYFIKATOR_ZWIERZECIA.data
+#         PORA_KARMIENIA = form.PORA_KARMIENIA.data
+#         ILOSC_KARMY = form.ILOSC_KARMY.data
+#         WIEK = form.WIEK.data
+#         IMIE = form.IMIE.data
+#         WLASCICIEL = form.WLASCICIEL.data
+#         KARMA = form.KARMA.data
+#         GATUNEK = form.GATUNEK.data
+#         RODZINA = form.RODZINA.data
+#         GROMADA = form.GROMADA.data
+#         AZYL = form.AZYL.data
+
+#         print(IDENTYFIKATOR_ZWIERZECIA,
+#             PORA_KARMIENIA,
+#             ILOSC_KARMY,
+#             WIEK,
+#             IMIE,
+#             WLASCICIEL,
+#             KARMA,
+#             GATUNEK,
+#             RODZINA,
+#             GROMADA,
+#             AZYL)
+
+#         insert.insert_into_oracle('ZWIERZETA', 
+#             [
+#                 "IDENTYFIKATOR_ZWIERZECIA",
+#                 "PORA_KARMIENIA",
+#                 "ILOSC_KARMY",
+#                 "WIEK",
+#                 "IMIE",
+#                 "WLASCICIEL",
+#                 "KARMA",
+#                 "GATUNEK",
+#                 "RODZINA",
+#                 "GROMADA",
+#                 "AZYL"
+#             ], 
+#             [
+#                 IDENTYFIKATOR_ZWIERZECIA,
+#                 PORA_KARMIENIA,
+#                 ILOSC_KARMY,
+#                 WIEK,
+#                 IMIE,
+#                 WLASCICIEL,
+#                 KARMA,
+#                 GATUNEK,
+#                 RODZINA,
+#                 GROMADA,
+#                 AZYL
+#             ] 
+#             )
+
+#         print(IDENTYFIKATOR_ZWIERZECIA)
+#         form.IDENTYFIKATOR_ZWIERZECIA.data = ""
+#         form.PORA_KARMIENIA.data = ""
+#         form.ILOSC_KARMY.data = ""
+#         form.WIEK.data = ""
+#         form.IMIE.data = ""
+#         form.WLASCICIEL.data = ""
+#         form.KARMA.data = ""
+#         form.GATUNEK.data = ""
+#         form.RODZINA.data = ""
+#         form.GROMADA.data = ""
+#         form.AZYL.data = ""
+
+#         return redirect(url_for('insert_zwierze_page'))
+
+#     print(IDENTYFIKATOR_ZWIERZECIA)     
+    
+    
+
+        
+
+        
 
 
 

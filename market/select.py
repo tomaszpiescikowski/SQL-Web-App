@@ -18,7 +18,7 @@ def select_simple(select_statement):
     else:
         
         list_of_results = cur.fetchall()
-        print(list_of_results)
+        #print(list_of_results)
         lst = []
         if list_of_results != []:
             # if len(list_of_results[0]) == 1:
@@ -35,10 +35,6 @@ def select_simple(select_statement):
                 return lst
         else:
             return "BRAK DANYCH"
-        
-
-        
-        
         
 
 def select_from_oracle(list_of_parameters, table_name, parameter_to_where, sign, value_to_where, parameter_to_order, value_to_order):
