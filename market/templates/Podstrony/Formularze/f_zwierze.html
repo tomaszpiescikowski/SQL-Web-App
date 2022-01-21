@@ -21,14 +21,15 @@
     
 </head>
 <body style="zoom: 85%;">
+   <div class="back" style="top: 100px; right: 230px;"><a href="{{ url_for('insert_choose_page') }}" class="tilelink">WRÓĆ</a></div>
    <div id="container">
       <div class="rectangle">
          <div id="logo_new">
-            <img src="{{ url_for('static', filename='img/logo2.png') }}" height=20% width=20% />
-            <a href="index.html" class="tilelink">Mini Zoo
+            <a href="{{url_for('root_page')}}"><img src="{{ url_for('static', filename='img/logo2.png') }}" height=20% width=20% /></a>
+            <a href="{{ url_for('root_page', tabela='brak') }}" class="tilelink" style="zoom: 80%;">MINI Zoo</a>
             </a>
          </div>
-         <div id="logo_przeglad">DODAWANIE DANYCH</div>
+         <div id="logo_przeglad">DODAWANIE ZWIERZĄT</div>
          <!--<div id="zegar">13:00</div>-->
          <div style="clear:both;"></div>
       </div>
@@ -70,6 +71,16 @@
                         {% for message in messages %}
                           <div class="btn btn-success" style="margin: 0 0 0 20px; width: 50%;">{{ message }}</div>
                         {% endfor %}
+                        <script src="https://code.jquery.com/jquery-3.3.1.min.js">
+                        </script>
+                         
+                        <script type="text/javascript">
+                          $(document).ready(function () {
+                            setTimeout(function () {
+                              location.reload(true);
+                            }, 3000);
+                          });
+                        </script>
                      {% else %}
                         {{ form.submit(class="btn btn-primary", style="margin: 0 0 0 0px; width: 100%;") }}
                      {% endif %}

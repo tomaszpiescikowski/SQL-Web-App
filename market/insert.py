@@ -1,6 +1,7 @@
 # table_name            <nazwa tabli np. pracownicy>
 # list_of_parameters    <nazwy kolumn do insertu w postaci listy np. [id_prac, imie, nazwisko, etat, placa_pod...]>
 # list_of_arguments     <wartości do wpisania w kolumny z list_of_parameters np. [23, 'jan', 'brzechwa', 'pisarz'...]>
+from re import A
 from market import conn
 
 def insert_into_oracle(table_name, list_of_parameters, list_of_arguments):
@@ -25,7 +26,11 @@ def insert_into_oracle(table_name, list_of_parameters, list_of_arguments):
             elif type(argument) == float:
                 list_of_arguments_string += str(argument) + ","
             elif type(argument) == str:
-                list_of_arguments_string += "'" + argument.upper() + "',"
+                if argument[:9] != "TIMESTAMP":
+                    list_of_arguments_string += "'" + argument.upper() + "',"
+                else:
+                    list_of_arguments_string += "TIMESTAMP " + "'" + argument[9:].upper() + "',"
+
             else:
                 print(f'Zly typ danych w argumencie: {type(argument)}')
                 raise Exception
@@ -35,6 +40,7 @@ def insert_into_oracle(table_name, list_of_parameters, list_of_arguments):
 
         cur = conn.cursor()
         insert_statement = f"INSERT INTO {table_name.upper()} {list_of_parameters_string} VALUES {list_of_arguments_string}"
+        print(insert_statement)
         cur.execute(insert_statement)
 
     except Exception as err:

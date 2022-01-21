@@ -1,63 +1,75 @@
-<!DOCTYPE HTML>
-<html lang="pl">
-
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<title>Politechniczne Zoo</title>
-	<meta name="description" content="Witamy w naszym bajecznym ogrodzie zoologicznym!"/>
-	<meta name="keywords" content="zwierzeta, zwierze, zoo, ogrod, zoologiczny" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <meta charset="utf-8"/>
+    <title>Politechniczne Zoo</title>
+    <meta name="description" content="Witamy w naszym bajecznym ogrodzie zoologicznym!"/>
+    <meta name="keywords" content="zwierzeta, zwierze, zoo, ogrod, zoologiczny" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
-	<!-- Nie wiem dlaczego, ale plik styles.css działa tylko ze ścieżką bezwględna -->
-	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css" />
-	<link rel="stylesheet" href="css/fontello.css" type="text/css" />
-	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Quicksand:wght@300&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="css/fontello.css" type="text/css" />
-	<link href='http://fonts.googleapis.com/css?family=Lato|Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/fontello.css" type="text/css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato|Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
 </head>
-
-
-<body>
-<div id="container">
-
-	<div class="rectangle">
-		<div id="logo_new">
-			<img src="{{ url_for('static', filename='img/logo2.png') }}" height=20% width=20% />
-			<a href="index.html" class="tilelink">Mini Zoo
-			</a>
-		</div>
-		<div id="logo_przeglad">DODAWANIE DANYCH</div>
-		<!--<div id="zegar">13:00</div>-->
-		<div style="clear:both;"></div>
-	</div>
+<body style="zoom: 85%;">
+   <div class="back" style="top: 100px; right: 230px;"><a href="{{ url_for('insert_choose_page') }}" class="tilelink">WRÓĆ</a></div>
+   <div id="container">
+      <div class="rectangle">
+         <div id="logo_new">
+            <a href="{{url_for('root_page')}}"><img src="{{ url_for('static', filename='img/logo2.png') }}" height=20% width=20% /></a>
+            <a href="{{ url_for('root_page', tabela='brak') }}" class="tilelink" style="zoom: 80%;">MINI Zoo</a>
+         </div>
+         <div id="logo_przeglad">DODAWANIE ZESPOŁU</div>
+         <!--<div id="zegar">13:00</div>-->
+         <div style="clear:both;"></div>
+      </div>
 
 	<main>
 		<article>
-			<form action="order.php" method="post">
-				<div class="dodaj_dane_wstep">
-					Wypełnij formularz, aby dodać nowy zespół.
-				</div>
-				<div class="pyt_formularz">
-					<fieldset>
-						<legend>Podaj nazwę zespołu</legend>
-						<label> <input type="text" required minlength="1" maxlength="50"> </label>
-					</fieldset>
-				</div>
-				<div class="pyt_formularz">
-					<fieldset>
-						<legend>Podaj liczbę członków zespołu</legend>
-						<label> <input type="number"> </label>
-					</fieldset>
-				</div>
-				<div class="pyt_formularz">
-					<input type="submit" value="Zatwierdź">
-				</div>
-				<div style="clear:both;"></div>
-				<div class="rectangle">2021 &copy; Tomasz Pieścikowski, Lena Ptak - System do zarządania bazą danych <i class="icon-mail"></i> lena.ptak@student.put.poznan.pl</div>
-			</form>
-		</article>
+            {% from "Podstrony/Formularze/_formhelpers.html" import render_field %}            
+            <form method="post">
+               {{ form.hidden_tag() }}
+                  {{ render_field(form.NAZWA) }}
+                  <br>
+                  {{ render_field(form.LICZBA_CZLONKOW) }}                  
+                  <br>
+                  <br>
+                     {% with messages = get_flashed_messages() %}
+                     {% if messages %}
+                        {{ form.submit(class="btn btn-primary", style="margin: 0 0 0 0px; width: 100%;") }}
+						<br>
+                        {% for message in messages %}
+						  <br>
+                          <div class="btn btn-success" style="margin: 30 0 0 0; width: 100%;">{{ message }}</div>
+                        {% endfor %}
+                        <script src="https://code.jquery.com/jquery-3.3.1.min.js">
+                        </script>
+                         
+                        <script type="text/javascript">
+                          $(document).ready(function () {
+                            setTimeout(function () {
+                              location.reload(true);
+                            }, 3000);
+                          });
+                        </script>
+                     {% else %}
+                        {{ form.submit(class="btn btn-primary", style="margin: 0 0 0 0px; width: 100%;") }}
+						<br>
+                     {% endif %}
+                     {% endwith %}
+                  
+               </div>
+            </form>
+         </article>
 	</main>
 </div>
 </body>

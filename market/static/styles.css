@@ -122,6 +122,10 @@ body
 	font-size: 27px;
 	text-align: center;
 	padding: 40px 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10px;
 }
 
 .kafelek:hover
@@ -198,6 +202,9 @@ body
 	font-size: 35px;
 	text-align: center;
 	padding: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .tile1:hover
@@ -254,6 +261,9 @@ body
 	font-size: 31px;
 	text-align: center;
 	padding: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .tile2:hover
@@ -272,6 +282,9 @@ body
 	font-size: 35px;
 	text-align: center;
 	padding: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .tile3:hover
@@ -289,7 +302,6 @@ body
 	text-align: center;
 	padding: 30px;
 	line-height: 150%;
-
 }
 
 .tile6
@@ -302,6 +314,9 @@ body
 	font-size: 35px;
 	text-align: center;
 	padding: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .zdjecia
@@ -312,11 +327,11 @@ body
 }
 
 
-
 a.tilelink
 {
 	color: #ffe7d6;
 	text-decoration: none;
+
 }
 
 .logowanie

@@ -2,7 +2,10 @@ from email import message
 from wsgiref import validate
 from market import app, select, insert
 from flask import render_template, request, url_for, redirect, flash, get_flashed_messages
-
+from flask_wtf import FlaskForm
+from wtforms import *
+from wtforms.validators import *
+app.config['SECRET_KEY'] = 'secretkey'
 """
     Tutaj tworzysz podstrony. Pliki HTML muszą znajdować się w folderze market/templates, żeby działały
     Pliki CSS są w folderze /market/static, ale ich ścieżkę i tak definiujesz w sekcji <head> w pliku HTML.
@@ -80,56 +83,323 @@ def update_zwierze_page():
 def update_typ_azylu_page():
     return render_template('Podstrony/Edycja/edycja_typ_azylu.html')
 
+
+
 @app.route('/dodawanie_danych/edycja_typu_pracownika')
 def update_typ_prac_page():
     return render_template('Podstrony/Edycja/edycja_typ_prac.html')
 
 
-
+class WstawGatunek(FlaskForm):
+    NAZWA_GATUNKU    = StringField(label="Podaj nazwę nowego gatunku", 
+                                           description="Tutaj wpisz swoją wartość!",
+                                           validators=[DataRequired(), Length(min=4, max=50)]
+                                           )
+    submit = SubmitField("Dodaj!")
 
 # PODSTRONY DODAWANIA DANYCH
-@app.route('/dodawanie_danych/formularz_azylu')
-def insert_azyl_page():
-    return render_template('Podstrony/Formularze/f_azyl.html')
-
-@app.route('/dodawanie_danych/formularz_biletu')
-def insert_bilet_page():
-    return render_template('Podstrony/Formularze/f_bilet.html')
-
-@app.route('/dodawanie_danych/formularz_gatunku')
+@app.route('/dodawanie_danych/formularz_gatunku', methods = ["POST", "GET"])
 def insert_gatunek_page():
-    return render_template('Podstrony/Formularze/f_gatunek.html')
+    form = WstawGatunek(request.form)
+    NAZWA_GATUNKU  = None
+    if request.method == 'POST' and form.validate_on_submit():
+        flash('Dodano nowy gatunek!')
 
-@app.route('/dodawanie_danych/formularz_gromady')
-def insert_gromada_page():
-    return render_template('Podstrony/Formularze/f_gromada.html')
+        #########################
+        NAZWA_GATUNKU  = form.NAZWA_GATUNKU.data
 
-@app.route('/dodawanie_danych/formularz_karmy')
+        print(NAZWA_GATUNKU )
+        print(type(NAZWA_GATUNKU ))
+
+
+        insert.insert_into_oracle('GATUNKI', 
+            [
+                "NAZWA_GATUNKU "
+            ], 
+            [
+                NAZWA_GATUNKU 
+            ] 
+            )
+
+        form.NAZWA_GATUNKU.data = ""
+        #########################
+
+        return redirect(url_for('insert_gatunek_page'))
+
+    return render_template('Podstrony/Formularze/f_gatunek.html',
+                                NAZWA_GATUNKU = NAZWA_GATUNKU,
+                                form = form
+                                )
+    
+
+class WstawKarme(FlaskForm):
+    NAZWA_KARMY  = StringField(label="Podaj nazwę karmy", 
+                                           description="Tutaj wpisz swoją wartość!",
+                                           validators=[DataRequired(), Length(min=4, max=50)]
+                                           )
+    CENA_KG  = FloatField(label="Podaj cenę za kilogram", 
+                                            description="Tutaj wpisz swoją wartość!",
+                                            validators=[DataRequired()]
+                                           )
+    PRODUCENT  = StringField(label="Podaj nazwę producenta", 
+                                           description="Tutaj wpisz swoją wartość!",
+                                           validators=[DataRequired(), Length(min=4, max=50)]
+                                           )
+    NR_DO_PRODUCENTA  = StringField(label="Podaj numer telefonu do producenta", 
+                                           description="Tutaj wpisz swoją wartość!",
+                                           validators=[Optional(), Length(min=4, max=50)]
+                                           )
+    submit = SubmitField("Dodaj!")
+
+@app.route('/dodawanie_danych/formularz_karmy', methods = ["POST", "GET"])
 def insert_karma_page():
-    return render_template('Podstrony/Formularze/f_karma.html')
+    form = WstawKarme(request.form)
+    NAZWA_KARMY = None
+    CENA_KG = None
+    PRODUCENT = None
+    NR_DO_PRODUCENTA = None
 
-@app.route('/dodawanie_danych/formularz_pawilonu')
-def insert_pawilon_page():
-    return render_template('Podstrony/Formularze/f_pawilon.html')
+    if request.method == 'POST' and form.validate_on_submit():
+        flash('Dodano nową karmę!')
 
-@app.route('/dodawanie_danych/formularz_pracwonika')
+        #########################
+        NAZWA_KARMY = form.NAZWA_KARMY.data
+        CENA_KG = form.CENA_KG.data
+        PRODUCENT = form.PRODUCENT.data
+        NR_DO_PRODUCENTA = form.NR_DO_PRODUCENTA.data
+
+        print(NAZWA_KARMY,
+                CENA_KG,
+                PRODUCENT,
+                NR_DO_PRODUCENTA)
+        
+        print(type(NAZWA_KARMY),
+                type(CENA_KG),
+                type(PRODUCENT),
+                type(NR_DO_PRODUCENTA))
+
+
+        insert.insert_into_oracle('KARMY', 
+            [
+                "NAZWA_KARMY",
+                "CENA_KG",
+                "PRODUCENT",
+                "NR_DO_PRODUCENTA"
+            ], 
+            [
+                NAZWA_KARMY,
+                CENA_KG,
+                PRODUCENT,
+                NR_DO_PRODUCENTA
+            ] 
+            )
+
+        form.NAZWA_KARMY.data = ""
+        form.CENA_KG.data = ""
+        form.PRODUCENT.data = ""
+        form.NR_DO_PRODUCENTA.data = ""
+        #########################
+
+        return redirect(url_for('insert_karma_page'))
+
+    return render_template('Podstrony/Formularze/f_karma.html',
+                                NAZWA_KARMY = NAZWA_KARMY,
+                                CENA_KG = CENA_KG,
+                                PRODUCENT = PRODUCENT,
+                                NR_DO_PRODUCENTA = NR_DO_PRODUCENTA,
+                                form=form
+                                )
+    
+
+class WstawPracownika(FlaskForm):
+    NR_TELEFONU  = IntegerField(label="Podaj numer telefonu pracownika", 
+                                           description="Tutaj wpisz swoją wartość!",
+                                           validators=[DataRequired()]
+                                           )
+    IMIE  = StringField(label="Podaj imię pracownika", 
+                                           description="Tutaj wpisz swoją wartość!",
+                                           validators=[DataRequired(), Length(min=2, max=50)]
+                                           )
+    NAZWISKO  = StringField(label="Podaj nazwisko pracownika", 
+                                           description="Tutaj wpisz swoją wartość!",
+                                           validators=[DataRequired(), Length(min=2, max=50)]
+                                           )
+    PLACA_POD  = FloatField(label="Podaj płacę podstawową pracownika", 
+                                           description="Tutaj wpisz swoją wartość!",
+                                           validators=[DataRequired(message='Wpisz liczbę rzeczywistą, np: 1500.50')]
+                                           )
+    STAZ  = SelectField(label="Wybierz staz pracownika", 
+                                           coerce=str,
+                                           validators=[DataRequired()]
+                                           )                   
+    PLACA_DOD  = FloatField(label="Podaj płacę dodatkową pracownika", 
+                                           description="Tutaj wpisz swoją wartość!",
+                                           validators=[Optional()]
+                                           )
+    NAZWA_ZESPOLU  = SelectField(label='Wybierz zespol pracownika', 
+                                            coerce=str,
+                                            validators=[DataRequired()]
+                                            )
+    NAZWA_SPECJALIZACJI  = SelectField(label='Wybierz specjalizację pracownika', 
+                                            coerce=str,
+                                            validators=[DataRequired()]
+                                            )
+    submit = SubmitField("Dodaj!")
+
+
+@app.route('/dodawanie_danych/formularz_pracownika', methods=['POST', 'GET'])
 def insert_pracownik_page():
-    return render_template('Podstrony/Formularze/f_pracownik.html')
+    form = WstawPracownika(request.form)
+    NR_TELEFONU = None
+    IMIE = None
+    NAZWISKO = None
+    PLACA_POD = None
+    STAZ = None
+    PLACA_DOD = None
+    NAZWA_ZESPOLU = None
+    NAZWA_SPECJALIZACJI = None
 
-@app.route('/dodawanie_danych/formularz_rodziny')
-def insert_rodzina_page():
-    return render_template('Podstrony/Formularze/f_rodzina.html')
+    #głowne
+    NAZWA_ZESPOLU_LISTA = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA FROM ZESPOLY')]
+    NAZWA_SPECJALIZACJI_LISTA = [(elem[0], elem[0]) for elem in select.select_simple('SELECT SPECJALIZACJA FROM TYPY_PRACOWNIKA')]
 
-@app.route('/dodawanie_danych/formularz_zespolu')
+    form.NAZWA_SPECJALIZACJI.choices = NAZWA_SPECJALIZACJI_LISTA
+    form.NAZWA_ZESPOLU.choices = NAZWA_ZESPOLU_LISTA
+    form.STAZ.choices = [('TIMESTAMP2022-01-23 08:42:31.12', 'Od teraz'), ('TIMESTAMP2017-01-01 00:00:00.00', 'Od 5 lat'), ('TIMESTAMP2012-01-01 00:00:00.00', 'Od 10 lat'), ('TIMESTAMP2007-01-01 00:00:00.00', 'Od 15 lat')]
+
+    if request.method == 'POST' and form.validate_on_submit():
+        flash('Dodano nowego pracownika!')
+
+        #########################
+        NR_TELEFONU = form.NR_TELEFONU.data 
+        IMIE = form.IMIE.data 
+        NAZWISKO = form.NAZWISKO.data 
+        PLACA_POD = form.PLACA_POD.data 
+        STAZ = form.STAZ.data 
+        PLACA_DOD = form.PLACA_DOD.data 
+        NAZWA_ZESPOLU = form.NAZWA_ZESPOLU.data 
+        NAZWA_SPECJALIZACJI = form.NAZWA_SPECJALIZACJI.data 
+
+        print(NR_TELEFONU,
+                IMIE,
+                NAZWISKO,
+                PLACA_POD,
+                STAZ,
+                PLACA_DOD,
+                NAZWA_ZESPOLU,
+                NAZWA_SPECJALIZACJI)
+
+        print(type(NR_TELEFONU),
+                type(IMIE),
+                type(NAZWISKO),
+                type(PLACA_POD),
+                type(STAZ),
+                type(PLACA_DOD),
+                type(NAZWA_ZESPOLU),
+                type(NAZWA_SPECJALIZACJI))
+
+        insert.insert_into_oracle('PRACOWNICY', 
+            [
+                "NR_TELEFONU",
+                "IMIE",
+                "NAZWISKO",
+                "PLACA_POD",
+                "STAZ",
+                "PLACA_DOD",
+                "NAZWA_ZESPOLU",
+                "NAZWA_SPECJALIZACJI"
+            ], 
+            [
+                NR_TELEFONU,
+                IMIE,
+                NAZWISKO,
+                PLACA_POD,
+                STAZ,
+                PLACA_DOD,
+                NAZWA_ZESPOLU,
+                NAZWA_SPECJALIZACJI
+            ] 
+            )
+
+        form.NR_TELEFONU.data = ""
+        form.IMIE.data = ""
+        form.NAZWISKO.data = ""
+        form.PLACA_POD.data = ""
+        form.STAZ.data = ""
+        form.PLACA_DOD.data = ""
+        form.NAZWA_ZESPOLU.data = ""
+        form.NAZWA_SPECJALIZACJI.data = ""
+        #########################
+
+        return redirect(url_for('insert_pracownik_page'))
+
+    return render_template('Podstrony/Formularze/f_pracownik.html',
+                                NR_TELEFONU = NR_TELEFONU,
+                                IMIE = IMIE,
+                                NAZWISKO = NAZWISKO,
+                                PLACA_POD = PLACA_POD,
+                                STAZ = STAZ,
+                                PLACA_DOD = PLACA_DOD,
+                                NAZWA_ZESPOLU = NAZWA_ZESPOLU,
+                                NAZWA_SPECJALIZACJI = NAZWA_SPECJALIZACJI,
+                                form = form
+                                )
+
+    
+
+
+
+class WstawZespol(FlaskForm):
+    NAZWA  = StringField(label="Podaj nazwę zespołu", 
+                                           description="Tutaj wpisz swoją wartość!",
+                                           validators=[DataRequired(), Length(min=4, max=50)]
+                                           )
+    LICZBA_CZLONKOW  = IntegerField(label="Podaj liczbę członków zespołu", 
+                                            description="Tutaj wpisz swoją wartość!",
+                                            validators=[DataRequired(), NumberRange(min=1, max=200)]
+                                           )
+    submit = SubmitField("Dodaj!")
+
+@app.route('/dodawanie_danych/formularz_zespolu', methods=["POST", "GET"])
 def insert_zespol_page():
-    return render_template('Podstrony/Formularze/f_zespol.html')
+    form = WstawZespol(request.form)
+    NAZWA = None
+    LICZBA_CZLONKOW = None
+
+    if request.method == 'POST' and form.validate_on_submit():
+        flash('Dodano nowy zespol!')
+
+        #########################
+        NAZWA = form.NAZWA.data
+        LICZBA_CZLONKOW = form.LICZBA_CZLONKOW.data
+
+        print(NAZWA, LICZBA_CZLONKOW)
+        
+        print(type(NAZWA), type(LICZBA_CZLONKOW))
 
 
+        insert.insert_into_oracle('ZESPOLY', 
+            [
+                "NAZWA",
+                "LICZBA_CZLONKOW"
+            ], 
+            [
+                NAZWA,
+                LICZBA_CZLONKOW
+            ] 
+            )
 
-from flask_wtf import FlaskForm
-from wtforms import *
-from wtforms.validators import *
-app.config['SECRET_KEY'] = 'secretkey'
+        form.NAZWA.data = ""
+        form.LICZBA_CZLONKOW.data = ""
+        #########################
+
+        return redirect(url_for('insert_zespol_page'))
+
+    return render_template('Podstrony/Formularze/f_zespol.html',
+                                NAZWA = NAZWA,
+                                LICZBA_CZLONKOW = LICZBA_CZLONKOW,
+                                form = form
+                                )
 
 class WstawZwierze(FlaskForm):
     IDENTYFIKATOR_ZWIERZECIA = IntegerField(label="Podaj identyfikator zwierzęcia", 
@@ -296,8 +566,6 @@ def insert_zwierze_page():
 
         return redirect(url_for('insert_zwierze_page'))
 
-
-
     return render_template('Podstrony/Formularze/f_zwierze.html',
                                 IDENTYFIKATOR_ZWIERZECIA = IDENTYFIKATOR_ZWIERZECIA,
                                 PORA_KARMIENIA = PORA_KARMIENIA,
@@ -313,168 +581,45 @@ def insert_zwierze_page():
                                 form = form
                                 )
 
-# @app.route('/dodawanie_danych/formularz_zwierzecia', methods = ['GET', 'POST'])
-# def insert_zwierze_page():
-    
+class WstawTypPracownika(FlaskForm):
+    SPECJALIZACJA   = StringField(label="Podaj nazwę specjalizacji", 
+                                           description="Tutaj wpisz swoją wartość!",
+                                           validators=[DataRequired(), Length(min=4, max=50)]
+                                           )
+    submit = SubmitField("Dodaj!")
 
-    
-#     print(form.validate())
-#     flash(form.errors)
-#     if form.validate_on_submit():
-#         print(11111111111111111111111111111111)
-#         IDENTYFIKATOR_ZWIERZECIA = form.IDENTYFIKATOR_ZWIERZECIA.data
-#         PORA_KARMIENIA = form.PORA_KARMIENIA.data
-#         ILOSC_KARMY = form.ILOSC_KARMY.data
-#         WIEK = form.WIEK.data
-#         IMIE = form.IMIE.data
-#         WLASCICIEL = form.WLASCICIEL.data
-#         KARMA = form.KARMA.data
-#         GATUNEK = form.GATUNEK.data
-#         RODZINA = form.RODZINA.data
-#         GROMADA = form.GROMADA.data
-#         AZYL = form.AZYL.data
-
-#         print(IDENTYFIKATOR_ZWIERZECIA,
-#             PORA_KARMIENIA,
-#             ILOSC_KARMY,
-#             WIEK,
-#             IMIE,
-#             WLASCICIEL,
-#             KARMA,
-#             GATUNEK,
-#             RODZINA,
-#             GROMADA,
-#             AZYL)
-
-#         insert.insert_into_oracle('ZWIERZETA', 
-#             [
-#                 "IDENTYFIKATOR_ZWIERZECIA",
-#                 "PORA_KARMIENIA",
-#                 "ILOSC_KARMY",
-#                 "WIEK",
-#                 "IMIE",
-#                 "WLASCICIEL",
-#                 "KARMA",
-#                 "GATUNEK",
-#                 "RODZINA",
-#                 "GROMADA",
-#                 "AZYL"
-#             ], 
-#             [
-#                 IDENTYFIKATOR_ZWIERZECIA,
-#                 PORA_KARMIENIA,
-#                 ILOSC_KARMY,
-#                 WIEK,
-#                 IMIE,
-#                 WLASCICIEL,
-#                 KARMA,
-#                 GATUNEK,
-#                 RODZINA,
-#                 GROMADA,
-#                 AZYL
-#             ] 
-#             )
-
-#         print(IDENTYFIKATOR_ZWIERZECIA)
-#         form.IDENTYFIKATOR_ZWIERZECIA.data = ""
-#         form.PORA_KARMIENIA.data = ""
-#         form.ILOSC_KARMY.data = ""
-#         form.WIEK.data = ""
-#         form.IMIE.data = ""
-#         form.WLASCICIEL.data = ""
-#         form.KARMA.data = ""
-#         form.GATUNEK.data = ""
-#         form.RODZINA.data = ""
-#         form.GROMADA.data = ""
-#         form.AZYL.data = ""
-
-#         return redirect(url_for('insert_zwierze_page'))
-
-#     print(IDENTYFIKATOR_ZWIERZECIA)     
-    
-    
-
-        
-
-        
-
-
-
-
-
-# @app.route('/insert', methods=["POST", "GET"])
-# def insertion():
-#     if request.method == 'POST':
-#         form = request.form
-#         identyfikator_zwierzecia = int(form['identyfikator_zwierzecia'])
-#         pora_karmienia = str(form['pora_karmienia'])
-#         ilosc_karmy = float(form['ilosc_karmy'])
-#         wiek = int(form['wiek'])
-#         imie = str(form['imie'])
-#         wlasciciel = str(form['wlasciciel'])
-#         karma = str(form['karma'])
-#         gatunek = str(form['gatunek'])
-#         rodzina = str(form['rodzina'])
-#         gromada = str(form['gromada'])
-#         azyl = int(form['azyl'])
-
-#         print(  "Wstawiam do: ZWIERZETA",
-#                 identyfikator_zwierzecia,
-#                 pora_karmienia,
-#                 ilosc_karmy,
-#                 wiek,
-#                 imie,
-#                 wlasciciel,
-#                 karma,
-#                 gatunek,
-#                 rodzina,
-#                 gromada,
-#                 azyl)
-        
-#         insert.insert_into_oracle('ZWIERZETA', 
-#         [
-#             'identyfikator_zwierzecia', 
-#             'pora_karmienia', 
-#             'ilosc_karmy', 
-#             'wiek', 
-#             'imie', 
-#             'wlasciciel',
-#             'karma',
-#             'gatunek',
-#             'rodzina',
-#             'gromada',
-#             'azyl'
-#         ], 
-#         [
-#             identyfikator_zwierzecia,
-#             pora_karmienia,
-#             ilosc_karmy,
-#             wiek,
-#             imie,
-#             wlasciciel,
-#             karma,
-#             gatunek,
-#             rodzina,
-#             gromada,
-#             azyl
-#         ] 
-#     )
-
-#         return render_template('Podstrony/Formularze/f_zwierze.html')
-    
-#     return redirect('Podstrony/Formularze/f_zwierze.html')
-
-
-@app.route('/dodawanie_danych/formularz_typu_azylu')
-def insert_typ_azylu_page():
-    return render_template('Podstrony/Formularze/f_typ_azylu.html')
-
-@app.route('/dodawanie_danych/formularz_typu_pracownika')
+@app.route('/dodawanie_danych/formularz_typu_pracownika', methods=['POST', 'GET'])
 def insert_typ_prac_page():
-    return render_template('Podstrony/Formularze/f_typ_prac.html')
+    form = WstawTypPracownika(request.form)
+    SPECJALIZACJA = None
+    if request.method == 'POST' and form.validate_on_submit():
+        flash('Dodano nowy typ pracownika!')
+
+        #########################
+        SPECJALIZACJA = form.SPECJALIZACJA.data
+
+        print(SPECJALIZACJA)
+        print(type(SPECJALIZACJA))
 
 
+        insert.insert_into_oracle('TYPY_PRACOWNIKA', 
+            [
+                "SPECJALIZACJA"
+            ], 
+            [
+                SPECJALIZACJA
+            ] 
+            )
 
+        form.SPECJALIZACJA.data = ""
+        #########################
+
+        return redirect(url_for('insert_typ_prac_page'))
+
+    return render_template('Podstrony/Formularze/f_typ_prac.html',
+                                SPECJALIZACJA = SPECJALIZACJA,
+                                form = form
+                                )
 
 # PODSTRONY PRZEGLĄDANIA DANYCH
 # 10.01.2022 TOMASZ P.
@@ -504,8 +649,6 @@ def select_basic_page():
         return render_template('Podstrony/Przegladanie/podstawowe.html', headings=naglowki_tabeli_do_wyswietlenia, data=dane_tabeli_do_wyswietlenia)
     else:
         return render_template('Podstrony/Przegladanie/podstawowe.html', headings=[], data=[])
-
-
 
 
 

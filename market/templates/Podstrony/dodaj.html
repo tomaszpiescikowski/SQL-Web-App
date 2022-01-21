@@ -21,21 +21,19 @@
 </head>
 
 <body onload="odliczanie();"> 
-
+	<div class="back" style="top: 95px; right: 160px;"><a href="{{ url_for('root_page') }}" class="tilelink">WRÓĆ</a></div>
 	<div id="container">
 
 		<div class="rectangle">
 			<div id="logo_new">
-				<img src="{{ url_for('static', filename='img/logo2.png') }}" height=20% width=20% />
-				<a href="index.html" class="tilelink">Mini Zoo
-				</a>
+				<a href="{{url_for('root_page')}}"><img src="{{ url_for('static', filename='img/logo2.png') }}" height=20% width=20% /></a>
+            <a href="{{ url_for('root_page', tabela='brak') }}" class="tilelink" style="zoom: 80%;">MINI Zoo</a>
 			</div>
 			<div id="logo_przeglad">DODAWANIE DANYCH</div>
-			<!--<div id="zegar">13:00</div>-->
 			<div style="clear:both;"></div>
 		</div>
 		
-		<div class="square">
+		<div class="square" style="display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: center; width: 100%; margin: 30px 0 200px 0;">
 			<a href="{{ url_for('insert_zwierze_page') }}" class="tilelink">
 			<div class="kafelek">
 				</i>ZWIERZĘ
@@ -52,27 +50,6 @@
 				</i>GATUNEK
 			</div>
 			</a>
-			<a href="{{ url_for('insert_rodzina_page') }}" class="tilelink">
-			<div class="kafelek">
-				</i>RODZINA
-			</div>
-			</a>
-			<div style="clear:both;"></div>
-
-			<a href="{{ url_for('insert_pawilon_page') }}" class="tilelink">
-				<div class="kafelek">
-					</i>PAWILON
-				</div>
-			</a>
-			<a href="{{ url_for('insert_bilet_page') }}" class="tilelink">
-				<div class="kafelek">
-					</i>BILET
-				</div>
-			</a>
-			<div style="clear:both;"></div>
-		</div>
-
-		<div class="square">
 			<a href="{{ url_for('insert_pracownik_page') }}" class="tilelink">
 			<div class="kafelek">
 				PRACOWNIK
@@ -88,23 +65,6 @@
 			<div class="kafelek">
 				</i>TYP PRACOWNIKA
 			</div>
-			</a>
-			<a href="{{ url_for('insert_gromada_page') }}" class="tilelink">
-			<div class="kafelek">
-				</i>GROMADA
-			</div>
-			</a>
-			<div style="clear:both;"></div>
-
-			<a href="{{ url_for('insert_azyl_page') }}" class="tilelink">
-				<div class="kafelek">
-					</i>AZYL
-				</div>
-			</a>
-			<a href="{{ url_for('insert_typ_azylu_page') }}" class="tilelink">
-				<div class="kafelek">
-					</i>TYP AZYLU
-				</div>
 			</a>
 			<div style="clear:both;"></div>
 		</div>
