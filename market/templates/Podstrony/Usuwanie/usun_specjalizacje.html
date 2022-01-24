@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8"/>
+    <title>Politechniczne Zoo</title>
+    <meta name="description" content="Witamy w naszym bajecznym ogrodzie zoologicznym!"/>
+    <meta name="keywords" content="zwierzeta, zwierze, zoo, ogrod, zoologiczny" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/fontello.css" type="text/css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato|Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+</head>
+<div class="back"><a href="{{ url_for('delete_choose_page') }}" class="tilelink">WRÓĆ</a></div>
+<div id="container_select">
+    <div class="rectangle">
+        <div id="logo_new">
+        <div id="logo_przeglad">
+            <a href="{{url_for('root_page')}}"><img src="{{ url_for('static', filename='img/logo2.png') }}" height=20% width=20% /></a>
+            <a href="{{ url_for('delete_typ_prac_page', tabela='brak') }}" class="tilelink">USUWANIE SPECJALIZACJI</a>
+           
+        </div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <h2>Wybierz specjalizacje do usuniecia</h2>
+    <div class="to_flex">
+
+        <form method="post" style="width: 100%;">
+            {{ form.hidden_tag() }}
+            {{ form.checkbox(style="height: auto; display: flex; flex-direction: row; flex-wrap: wrap; padding: 30px; margin 0 50px 0 50px; justify-content: center;") }}
+            {{ form.submit(class="btn btn-danger", style="margin: 0 0 0 0px; width: 100%;") }}
+        </form>
+
+    <div class="tabela">
+        <table>
+        <tr>
+            {% if headings|length >= 5 %}
+                {% for header in headings %}
+                <th style="padding: 4px 4px; font-size: 20px;">{{ header }}</th>
+                {% endfor %}
+            {% else %}
+                {% for header in headings %}
+                <th style="padding: 8px 16px; font-size: 26px;">{{ header }}</th>
+                {% endfor %}
+            {% endif %}
+        </tr>
+
+        {% if headings|length >= 5 %}
+            {% for row in data %}
+            <tr>
+                {% for cell in row %}
+                <td style="padding: 4px 4px; font-size: 20px;">{{ cell }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        {% else %}
+            {% for row in data %}
+            <tr>
+                {% for cell in row %}
+                <td style="padding: 8px 16px; font-size: 26px;">{{ cell }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        {% endif %}
+
+
+       
+        </table>
+    </div>
+    <div style="clear:both;"></div>
+    <div class="rectangle">2021 &copy; Lena Ptak, Tomasz Pieścikowski <i class="icon-mail"></i> lena.ptak@student.put.poznan.pl, tomasz.piescikowski@student.put.poznan.pl</div>
+</div>
+</div>
+</body>
+</html>

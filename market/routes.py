@@ -1,10 +1,11 @@
-from email import message
+from time import sleep
 from wsgiref import validate
-from market import app, select, insert
+from market import app, select, insert, delete, update
 from flask import render_template, request, url_for, redirect, flash, get_flashed_messages
 from flask_wtf import FlaskForm
 from wtforms import *
 from wtforms.validators import *
+from market import delete
 app.config['SECRET_KEY'] = 'secretkey'
 """
     Tutaj tworzysz podstrony. Pliki HTML muszą znajdować się w folderze market/templates, żeby działały
@@ -90,10 +91,15 @@ def update_typ_prac_page():
     return render_template('Podstrony/Edycja/edycja_typ_prac.html')
 
 
+def gatunek_sie_nie_powtarza(form, field):
+    NONE_OF_THIS = [str(elem[0]) for elem in select.select_simple('SELECT NAZWA_GATUNKU FROM GATUNKI')]
+    if str(field.data) in NONE_OF_THIS:
+        raise ValidationError(f'Ten gatunek jest już w bazie')
+
 class WstawGatunek(FlaskForm):
     NAZWA_GATUNKU    = StringField(label="Podaj nazwę nowego gatunku", 
                                            description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), Length(min=4, max=50)]
+                                           validators=[gatunek_sie_nie_powtarza, Length(min=4, max=50)]
                                            )
     submit = SubmitField("Dodaj!")
 
@@ -106,7 +112,7 @@ def insert_gatunek_page():
         flash('Dodano nowy gatunek!')
 
         #########################
-        NAZWA_GATUNKU  = form.NAZWA_GATUNKU.data
+        NAZWA_GATUNKU  =  form.NAZWA_GATUNKU.data.upper() if type(form.NAZWA_GATUNKU.data) == str else form.NAZWA_GATUNKU.data
 
         print(NAZWA_GATUNKU )
         print(type(NAZWA_GATUNKU ))
@@ -130,12 +136,16 @@ def insert_gatunek_page():
                                 NAZWA_GATUNKU = NAZWA_GATUNKU,
                                 form = form
                                 )
-    
+
+def karma_nie_jest_zajeta(form, field):
+    NONE_OF_THIS = [str(elem[0]) for elem in select.select_simple('SELECT NAZWA_KARMY FROM KARMY')]
+    if str(field.data) in NONE_OF_THIS:
+        raise ValidationError(f'Podana nazwa karmy jest juz zajeta')
 
 class WstawKarme(FlaskForm):
     NAZWA_KARMY  = StringField(label="Podaj nazwę karmy", 
                                            description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), Length(min=4, max=50)]
+                                           validators=[karma_nie_jest_zajeta, Length(min=4, max=50)]
                                            )
     CENA_KG  = FloatField(label="Podaj cenę za kilogram", 
                                             description="Tutaj wpisz swoją wartość!",
@@ -163,10 +173,10 @@ def insert_karma_page():
         flash('Dodano nową karmę!')
 
         #########################
-        NAZWA_KARMY = form.NAZWA_KARMY.data
-        CENA_KG = form.CENA_KG.data
-        PRODUCENT = form.PRODUCENT.data
-        NR_DO_PRODUCENTA = form.NR_DO_PRODUCENTA.data
+        NAZWA_KARMY = form.NAZWA_KARMY.data.upper() if type(form.NAZWA_KARMY.data) == str else form.NAZWA_KARMY.data
+        CENA_KG = form.CENA_KG.data.upper() if type(form.CENA_KG.data) == str else form.CENA_KG.data
+        PRODUCENT = form.PRODUCENT.data.upper() if type(form.PRODUCENT.data) == str else form.PRODUCENT.data
+        NR_DO_PRODUCENTA = form.NR_DO_PRODUCENTA.data.upper() if type(form.NR_DO_PRODUCENTA.data) == str else form.NR_DO_PRODUCENTA.data
 
         print(NAZWA_KARMY,
                 CENA_KG,
@@ -209,12 +219,19 @@ def insert_karma_page():
                                 NR_DO_PRODUCENTA = NR_DO_PRODUCENTA,
                                 form=form
                                 )
-    
+
+def nrtel_sie_nie_powtarza(form, field):
+    NONE_OF_THIS = [str(elem[0]) for elem in select.select_simple('SELECT NR_TELEFONU FROM PRACOWNICY')]
+    if len(str(field.data)) != 9:
+        raise ValidationError(f'Numer telefonu powinien składać się z 9 cyfr') 
+
+    if str(field.data) in NONE_OF_THIS:
+        raise ValidationError(f'Ten numer telefonu jest przypisany do innego pracownika') 
 
 class WstawPracownika(FlaskForm):
     NR_TELEFONU  = IntegerField(label="Podaj numer telefonu pracownika", 
                                            description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired()]
+                                           validators=[nrtel_sie_nie_powtarza]
                                            )
     IMIE  = StringField(label="Podaj imię pracownika", 
                                            description="Tutaj wpisz swoją wartość!",
@@ -271,14 +288,14 @@ def insert_pracownik_page():
         flash('Dodano nowego pracownika!')
 
         #########################
-        NR_TELEFONU = form.NR_TELEFONU.data 
-        IMIE = form.IMIE.data 
-        NAZWISKO = form.NAZWISKO.data 
-        PLACA_POD = form.PLACA_POD.data 
-        STAZ = form.STAZ.data 
-        PLACA_DOD = form.PLACA_DOD.data 
-        NAZWA_ZESPOLU = form.NAZWA_ZESPOLU.data 
-        NAZWA_SPECJALIZACJI = form.NAZWA_SPECJALIZACJI.data 
+        NR_TELEFONU = form.NR_TELEFONU.data.upper() if type(form.NR_TELEFONU.data) == str else form.NR_TELEFONU.data 
+        IMIE = form.IMIE.data.upper() if type(form.IMIE.data) == str else form.IMIE.data 
+        NAZWISKO = form.NAZWISKO.data.upper() if type(form.NAZWISKO.data) == str else form.NAZWISKO.data 
+        PLACA_POD = form.PLACA_POD.data.upper() if type(form.PLACA_POD.data) == str else form.PLACA_POD.data 
+        STAZ = form.STAZ.data.upper() if type(form.STAZ.data) == str else form.STAZ.data 
+        PLACA_DOD = form.PLACA_DOD.data.upper() if type(form.PLACA_DOD.data) == str else form.PLACA_DOD.data 
+        NAZWA_ZESPOLU = form.NAZWA_ZESPOLU.data.upper() if type(form.NAZWA_ZESPOLU.data) == str else form.NAZWA_ZESPOLU.data 
+        NAZWA_SPECJALIZACJI = form.NAZWA_SPECJALIZACJI.data.upper() if type(form.NAZWA_SPECJALIZACJI.data) == str else form.NAZWA_SPECJALIZACJI.data 
 
         print(NR_TELEFONU,
                 IMIE,
@@ -347,12 +364,15 @@ def insert_pracownik_page():
 
     
 
-
+def zespol_sie_nie_powtarza(form, field):
+    NONE_OF_THIS = [str(elem[0]) for elem in select.select_simple('SELECT NAZWA FROM ZESPOLY')]
+    if str(field.data) in NONE_OF_THIS:
+        raise ValidationError(f'Zespol o takiej nazwie juz istnieje') 
 
 class WstawZespol(FlaskForm):
     NAZWA  = StringField(label="Podaj nazwę zespołu", 
                                            description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), Length(min=4, max=50)]
+                                           validators=[zespol_sie_nie_powtarza, Length(min=4, max=50)]
                                            )
     LICZBA_CZLONKOW  = IntegerField(label="Podaj liczbę członków zespołu", 
                                             description="Tutaj wpisz swoją wartość!",
@@ -370,8 +390,8 @@ def insert_zespol_page():
         flash('Dodano nowy zespol!')
 
         #########################
-        NAZWA = form.NAZWA.data
-        LICZBA_CZLONKOW = form.LICZBA_CZLONKOW.data
+        NAZWA = form.NAZWA.data.upper() if type(form.NAZWA.data) == str else form.NAZWA.data
+        LICZBA_CZLONKOW = form.LICZBA_CZLONKOW.data.upper() if type(form.LICZBA_CZLONKOW.data) == str else form.LICZBA_CZLONKOW.data
 
         print(NAZWA, LICZBA_CZLONKOW)
         
@@ -401,14 +421,40 @@ def insert_zespol_page():
                                 form = form
                                 )
 
+def none_of_animal_id(form, field):
+    NONE_OF_ID = [int(elem[0]) for elem in select.select_simple('SELECT IDENTYFIKATOR_ZWIERZECIA FROM ZWIERZETA')]
+    if int(field.data) in NONE_OF_ID:
+        raise ValidationError(f'ID {field.data} jest juz zajete')
+
+
+def data_format(form, field):
+    temp = str(field.data)
+    przeszlo = False
+    try:
+        temp = temp.split(':')
+        if (len(temp) == 2 and
+            len(temp[0]) == 2 and
+            len(temp[1]) == 2 and
+            temp[0][0] in ['0', '1', '2'] and 
+            temp[0][1] in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']  and 
+            temp[1][0] in ['0', '1', '2', '3', '4', '5'] and 
+            temp[1][1] in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'] 
+            ):
+                przeszlo = True
+    except:
+        pass
+    if not przeszlo:
+        raise ValidationError(f'Data musi być podana w formacie "HH:MM" np. 06:30 lub 23:15')
+   
+
 class WstawZwierze(FlaskForm):
     IDENTYFIKATOR_ZWIERZECIA = IntegerField(label="Podaj identyfikator zwierzęcia", 
                                            description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), NoneOf([10, 20, 30, 40], "Ten identyfikator jest zajęty.")]
+                                           validators=[none_of_animal_id]
                                            )
     PORA_KARMIENIA = StringField(label="Podaj porę karmienia zwierzęcia", 
                                            description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), Length(min=4, max=20)]
+                                           validators=[data_format, Length(min=4, max=5)]
                                            )
     ILOSC_KARMY = FloatField(label="Podaj ilość karmy dla zwierzęcia", 
                                            description="Tutaj wpisz swoją wartość!",
@@ -416,7 +462,7 @@ class WstawZwierze(FlaskForm):
                                            )
     WIEK = IntegerField(label="Podaj wiek zwierzęcia", 
                                            description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), NumberRange(min=1, max=200)]
+                                           validators=[DataRequired(), NumberRange(min=1, max=300)]
                                            )
     IMIE = StringField(label="Podaj imie zwierzęcia", 
                                            description="Tutaj wpisz swoją wartość!",
@@ -467,7 +513,6 @@ def insert_zwierze_page():
     #pomocnicze
     IDENTYFIKATOR_AZYLU_LISTA = [elem[0] for elem in select.select_simple('SELECT IDENTYFIKATOR_AZYLU FROM AZYLE')]
     NAZWA_AZYLU_LISTA = [elem[0] for elem in select.select_simple('SELECT NAZWA_AZYLU FROM AZYLE')]
-    NONE_OF_ID = [elem[0] for elem in select.select_simple('SELECT IDENTYFIKATOR_ZWIERZECIA FROM ZWIERZETA')]
     #głowne
     NAZWA_GATUNKU_LISTA = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA_GATUNKU FROM GATUNKI')]
     NAZWA_KARMY_LISTA = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA_KARMY FROM KARMY')]
@@ -475,7 +520,6 @@ def insert_zwierze_page():
     NAZWA_RODZINY_LISTA = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA_RODZINY FROM RODZINY')]
     AZYLE_LISTA = [(IDENTYFIKATOR_AZYLU_LISTA[i], NAZWA_AZYLU_LISTA[i]) for i in range(len(IDENTYFIKATOR_AZYLU_LISTA))]
 
-    
     form.KARMA.choices = NAZWA_KARMY_LISTA
     form.RODZINA.choices = NAZWA_RODZINY_LISTA
     form.GATUNEK.choices = NAZWA_GATUNKU_LISTA
@@ -486,17 +530,17 @@ def insert_zwierze_page():
         flash('Dodano nowe zwierze!')
 
         #########################
-        IDENTYFIKATOR_ZWIERZECIA = form.IDENTYFIKATOR_ZWIERZECIA.data
-        PORA_KARMIENIA = form.PORA_KARMIENIA.data
-        ILOSC_KARMY = form.ILOSC_KARMY.data
-        WIEK = form.WIEK.data
-        IMIE = form.IMIE.data
-        WLASCICIEL = form.WLASCICIEL.data
-        KARMA = form.KARMA.data
-        GATUNEK = form.GATUNEK.data
-        RODZINA = form.RODZINA.data
-        GROMADA = form.GROMADA.data
-        AZYL = form.AZYL.data
+        IDENTYFIKATOR_ZWIERZECIA = form.IDENTYFIKATOR_ZWIERZECIA.data.upper() if type(form.IDENTYFIKATOR_ZWIERZECIA.data) == str else form.IDENTYFIKATOR_ZWIERZECIA.data
+        PORA_KARMIENIA = form.PORA_KARMIENIA.data.upper() if type(form.PORA_KARMIENIA.data) == str else form.PORA_KARMIENIA.data
+        ILOSC_KARMY = form.ILOSC_KARMY.data.upper() if type(form.ILOSC_KARMY.data) == str else form.ILOSC_KARMY.data
+        WIEK = form.WIEK.data.upper() if type(form.WIEK.data) == str else form.WIEK.data
+        IMIE = form.IMIE.data.upper() if type(form.IMIE.data) == str else form.IMIE.data
+        WLASCICIEL = form.WLASCICIEL.data.upper() if type(form.WLASCICIEL.data) == str else form.WLASCICIEL.data
+        KARMA = form.KARMA.data.upper() if type(form.KARMA.data) == str else form.KARMA.data
+        GATUNEK = form.GATUNEK.data.upper() if type(form.GATUNEK.data) == str else form.GATUNEK.data
+        RODZINA = form.RODZINA.data.upper() if type(form.RODZINA.data) == str else form.RODZINA.data
+        GROMADA = form.GROMADA.data.upper() if type(form.GROMADA.data) == str else form.GROMADA.data
+        AZYL = form.AZYL.data.upper() if type(form.AZYL.data) == str else form.AZYL.data
 
         print(IDENTYFIKATOR_ZWIERZECIA,
             PORA_KARMIENIA,
@@ -581,10 +625,15 @@ def insert_zwierze_page():
                                 form = form
                                 )
 
+def typ_sie_nie_powtarza(form, field):
+    NONE_OF_THIS = [str(elem[0]) for elem in select.select_simple('SELECT SPECJALIZACJA FROM TYPY_PRACOWNIKA')]
+    if str(field.data) in NONE_OF_THIS:
+        raise ValidationError(f'Taka specjalizacja pracownika jest juz w bazie') 
+
 class WstawTypPracownika(FlaskForm):
     SPECJALIZACJA   = StringField(label="Podaj nazwę specjalizacji", 
                                            description="Tutaj wpisz swoją wartość!",
-                                           validators=[DataRequired(), Length(min=4, max=50)]
+                                           validators=[typ_sie_nie_powtarza, Length(min=4, max=50)]
                                            )
     submit = SubmitField("Dodaj!")
 
@@ -596,7 +645,7 @@ def insert_typ_prac_page():
         flash('Dodano nowy typ pracownika!')
 
         #########################
-        SPECJALIZACJA = form.SPECJALIZACJA.data
+        SPECJALIZACJA = form.SPECJALIZACJA.data.upper() if type(form.SPECJALIZACJA.data) == str else form.SPECJALIZACJA.data
 
         print(SPECJALIZACJA)
         print(type(SPECJALIZACJA))
@@ -652,8 +701,172 @@ def select_basic_page():
 
 
 
+
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
+
+
+class UsunZwierze(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Usun zwierze!")
+
+
 # PODSTRONY USUWANIA DANYCH
-@app.route('/usuwanie_danych/usuwanie_zwierzat')
+@app.route('/usuwanie_danych/usuwanie_zwierzat', methods = ["POST", "GET"])
 def delete_zwierze_page():
-    return render_template('Podstrony/Usuwanie/usun_zwierzeta.html')
+    form = UsunZwierze(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple('SELECT IDENTYFIKATOR_ZWIERZECIA FROM ZWIERZETA')]
+
+    if form.validate_on_submit():
+        mapped = [int(x) for x in form.checkbox.data]
+        for i in range(len(mapped)):
+            delete.delete_from_oracle_with_where("ZWIERZETA", "IDENTYFIKATOR_ZWIERZECIA", '=', mapped[i])
+        return redirect(url_for('delete_zwierze_page'))
+
+    nazwa_tabeli_do_wyswietlenia = 'ZWIERZETA'
+    if nazwa_tabeli_do_wyswietlenia != 'brak':
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT * FROM {nazwa_tabeli_do_wyswietlenia.upper()}")
+        naglowki_tabeli_do_wyswietlenia = select.select_simple(f"SELECT COLUMN_NAME FROM USER_TAB_COLUMNS WHERE TABLE_NAME = '{nazwa_tabeli_do_wyswietlenia.upper()}'")
+        if dane_tabeli_do_wyswietlenia == [] or dane_tabeli_do_wyswietlenia == "BRAK DANYCH":
+            dane_tabeli_do_wyswietlenia = [["--" for i in range(len(naglowki_tabeli_do_wyswietlenia))]]
+        naglowki_tabeli_do_wyswietlenia = [i[0] for i in naglowki_tabeli_do_wyswietlenia]
+        return render_template('Podstrony/Usuwanie/usun_zwierze.html', form=form, headings=naglowki_tabeli_do_wyswietlenia, data=dane_tabeli_do_wyswietlenia)
+    else:
+        return render_template('Podstrony/Usuwanie/usun_zwierze.html', form=form ,headings=[], data=[])
+
+
+
+class UsunKarme(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Usun karme!")
+
+@app.route('/usuwanie_danych/usuwanie_karmy', methods = ['POST', 'GET'])
+def delete_karma_page():
+    form = UsunKarme(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA_KARMY FROM KARMY')]
+
+    if form.validate_on_submit():
+        mapped = [str(x) for x in form.checkbox.data]
+        for i in range(len(mapped)):
+            delete.delete_from_oracle_with_where("KARMY", "NAZWA_KARMY ", '=', mapped[i])
+        return redirect(url_for('delete_karma_page'))
+
+    nazwa_tabeli_do_wyswietlenia = 'KARMY'
+    if nazwa_tabeli_do_wyswietlenia != 'brak':
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT * FROM {nazwa_tabeli_do_wyswietlenia.upper()}")
+        naglowki_tabeli_do_wyswietlenia = select.select_simple(f"SELECT COLUMN_NAME FROM USER_TAB_COLUMNS WHERE TABLE_NAME = '{nazwa_tabeli_do_wyswietlenia.upper()}'")
+        if dane_tabeli_do_wyswietlenia == [] or dane_tabeli_do_wyswietlenia == "BRAK DANYCH":
+            dane_tabeli_do_wyswietlenia = [["--" for i in range(len(naglowki_tabeli_do_wyswietlenia))]]
+        naglowki_tabeli_do_wyswietlenia = [i[0] for i in naglowki_tabeli_do_wyswietlenia]
+        return render_template('Podstrony/Usuwanie/usun_karme.html', form=form, headings=naglowki_tabeli_do_wyswietlenia, data=dane_tabeli_do_wyswietlenia)
+    else:
+        return render_template('Podstrony/Usuwanie/usun_karme.html', form=form ,headings=[], data=[])
+
+
+class UsunGatunek(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Usun gatunki!")
+
+@app.route('/usuwanie_danych/usuwanie_gatunku', methods = ['POST', 'GET'])
+def delete_gatunek_page():
+    form = UsunGatunek(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA_GATUNKU FROM GATUNKI')]
+
+    if form.validate_on_submit():
+        mapped = [str(x) for x in form.checkbox.data]
+        for i in range(len(mapped)):
+            delete.delete_from_oracle_with_where("GATUNKI", "NAZWA_GATUNKU ", '=', mapped[i])
+        return redirect(url_for('delete_gatunek_page'))
+
+    nazwa_tabeli_do_wyswietlenia = 'GATUNKI'
+    if nazwa_tabeli_do_wyswietlenia != 'brak':
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT * FROM {nazwa_tabeli_do_wyswietlenia.upper()}")
+        naglowki_tabeli_do_wyswietlenia = select.select_simple(f"SELECT COLUMN_NAME FROM USER_TAB_COLUMNS WHERE TABLE_NAME = '{nazwa_tabeli_do_wyswietlenia.upper()}'")
+        if dane_tabeli_do_wyswietlenia == [] or dane_tabeli_do_wyswietlenia == "BRAK DANYCH":
+            dane_tabeli_do_wyswietlenia = [["--" for i in range(len(naglowki_tabeli_do_wyswietlenia))]]
+        naglowki_tabeli_do_wyswietlenia = [i[0] for i in naglowki_tabeli_do_wyswietlenia]
+        return render_template('Podstrony/Usuwanie/usun_gatunek.html', form=form, headings=naglowki_tabeli_do_wyswietlenia, data=dane_tabeli_do_wyswietlenia)
+    else:
+        return render_template('Podstrony/Usuwanie/usun_gatunek.html', form=form ,headings=[], data=[])
+
+
+class UsunPracownika(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Usun pracowników!")
+
+@app.route('/usuwanie_danych/usuwanie_pracownikow', methods = ['POST', 'GET'])
+def delete_pracownik_page():
+    form = UsunPracownika(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NR_TELEFONU FROM PRACOWNICY')]
+
+    if form.validate_on_submit():
+        mapped = [int(x) for x in form.checkbox.data]
+        for i in range(len(mapped)):
+            delete.delete_from_oracle_with_where("PRACOWNICY", "NR_TELEFONU ", '=', mapped[i])
+        return redirect(url_for('delete_pracownik_page'))
+
+    nazwa_tabeli_do_wyswietlenia = 'PRACOWNICY'
+    if nazwa_tabeli_do_wyswietlenia != 'brak':
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT * FROM {nazwa_tabeli_do_wyswietlenia.upper()}")
+        naglowki_tabeli_do_wyswietlenia = select.select_simple(f"SELECT COLUMN_NAME FROM USER_TAB_COLUMNS WHERE TABLE_NAME = '{nazwa_tabeli_do_wyswietlenia.upper()}'")
+        if dane_tabeli_do_wyswietlenia == [] or dane_tabeli_do_wyswietlenia == "BRAK DANYCH":
+            dane_tabeli_do_wyswietlenia = [["--" for i in range(len(naglowki_tabeli_do_wyswietlenia))]]
+        naglowki_tabeli_do_wyswietlenia = [i[0] for i in naglowki_tabeli_do_wyswietlenia]
+        return render_template('Podstrony/Usuwanie/usun_pracownika.html', form=form, headings=naglowki_tabeli_do_wyswietlenia, data=dane_tabeli_do_wyswietlenia)
+    else:
+        return render_template('Podstrony/Usuwanie/usun_pracownika.html', form=form ,headings=[], data=[])
+
+class UsunZespol(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Usun zespoly!")
+
+@app.route('/usuwanie_danych/usuwanie_zespolow', methods = ['POST', 'GET'])
+def delete_zespol_page():
+    form = UsunZespol(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA FROM ZESPOLY')]
+
+    if form.validate_on_submit():
+        mapped = [str(x) for x in form.checkbox.data]
+        for i in range(len(mapped)):
+            delete.delete_from_oracle_with_where("ZESPOLY", "NAZWA ", '=', mapped[i])
+        return redirect(url_for('delete_zespol_page'))
+
+    nazwa_tabeli_do_wyswietlenia = 'ZESPOLY'
+    if nazwa_tabeli_do_wyswietlenia != 'brak':
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT * FROM {nazwa_tabeli_do_wyswietlenia.upper()}")
+        naglowki_tabeli_do_wyswietlenia = select.select_simple(f"SELECT COLUMN_NAME FROM USER_TAB_COLUMNS WHERE TABLE_NAME = '{nazwa_tabeli_do_wyswietlenia.upper()}'")
+        if dane_tabeli_do_wyswietlenia == [] or dane_tabeli_do_wyswietlenia == "BRAK DANYCH":
+            dane_tabeli_do_wyswietlenia = [["--" for i in range(len(naglowki_tabeli_do_wyswietlenia))]]
+        naglowki_tabeli_do_wyswietlenia = [i[0] for i in naglowki_tabeli_do_wyswietlenia]
+        return render_template('Podstrony/Usuwanie/usun_zespol.html', form=form, headings=naglowki_tabeli_do_wyswietlenia, data=dane_tabeli_do_wyswietlenia)
+    else:
+        return render_template('Podstrony/Usuwanie/usun_zespol.html', form=form ,headings=[], data=[])
+
+class UsunTyp(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Usun specjalizacje!")
+
+@app.route('/usuwanie_danych/usuwanie_specjalizacji', methods = ['POST', 'GET'])
+def delete_typ_prac_page():
+    form = UsunTyp(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple('SELECT SPECJALIZACJA FROM TYPY_PRACOWNIKA')]
+
+    if form.validate_on_submit():
+        mapped = [str(x) for x in form.checkbox.data]
+        for i in range(len(mapped)):
+            delete.delete_from_oracle_with_where("TYPY_PRACOWNIKA", "SPECJALIZACJA ", '=', mapped[i])
+        return redirect(url_for('delete_typ_prac_page'))
+
+    nazwa_tabeli_do_wyswietlenia = 'TYPY_PRACOWNIKA'
+    if nazwa_tabeli_do_wyswietlenia != 'brak':
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT * FROM {nazwa_tabeli_do_wyswietlenia.upper()}")
+        naglowki_tabeli_do_wyswietlenia = select.select_simple(f"SELECT COLUMN_NAME FROM USER_TAB_COLUMNS WHERE TABLE_NAME = '{nazwa_tabeli_do_wyswietlenia.upper()}'")
+        if dane_tabeli_do_wyswietlenia == [] or dane_tabeli_do_wyswietlenia == "BRAK DANYCH":
+            dane_tabeli_do_wyswietlenia = [["--" for i in range(len(naglowki_tabeli_do_wyswietlenia))]]
+        naglowki_tabeli_do_wyswietlenia = [i[0] for i in naglowki_tabeli_do_wyswietlenia]
+        return render_template('Podstrony/Usuwanie/usun_specjalizacje.html', form=form, headings=naglowki_tabeli_do_wyswietlenia, data=dane_tabeli_do_wyswietlenia)
+    else:
+        return render_template('Podstrony/Usuwanie/usun_specjalizacje.html', form=form ,headings=[], data=[])
+
 

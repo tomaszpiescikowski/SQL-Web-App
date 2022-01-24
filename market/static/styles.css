@@ -133,6 +133,27 @@ body
 	background-color: #334A0D;
 }
 
+.kafelek_delete
+{
+	margin: 10px;
+	width: 190px;
+	height: 52px;
+	background-color: #860c0c;
+	float: left;
+	font-size: 27px;
+	text-align: center;
+	padding: 40px 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10px;
+}
+
+.kafelek_delete:hover
+{
+	background-color: #5e2828;
+}
+
 .nazwa_tab
 {
 	margin: 10px;
@@ -373,3 +394,21 @@ a.tilelink
 }
 
 td, th { border: 1px solid black; }
+
+
+#checkbox li {
+	margin: 0 40px 0 40px;
+	font-size: 25px;
+	list-style-type: none;
+	width: 300px;
+	
+}
+
+
+input[type='checkbox'] {
+    width:25px;
+    height:25px;
+    background:white;
+    border-radius:5px;
+    border:2px solid #555;
+}
