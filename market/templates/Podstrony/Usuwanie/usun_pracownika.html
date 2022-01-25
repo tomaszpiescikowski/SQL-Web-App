@@ -33,12 +33,13 @@
         <div style="clear:both;"></div>
     </div>
     <h2>Wybierz pracowników do usuniecia wybierając ich numer telefonu</h2>
+    <h3 style="padding: 20px; background-color: black; color: brown; border-radius: 20px; font-weight: bold;">UWAGA: Usługa tymczasowo niedostępna. Rozważnie dodawaj pracowników.</h2>
     <div class="to_flex">
 
         <form method="post" style="width: 100%;">
             {{ form.hidden_tag() }}
             {{ form.checkbox(style="height: auto; display: flex; flex-direction: row; flex-wrap: wrap; padding: 30px; margin 0 50px 0 50px; justify-content: center;") }}
-            {{ form.submit(class="btn btn-danger", style="margin: 0 0 0 0px; width: 100%;") }}
+            <!-- {{ form.submit(class="btn btn-danger", style="margin: 0 0 0 0px; width: 100%;") }} -->
         </form>
 
     <div class="tabela">

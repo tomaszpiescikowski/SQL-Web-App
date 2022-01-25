@@ -717,7 +717,7 @@ class UsunZwierze(FlaskForm):
 def delete_zwierze_page():
     form = UsunZwierze(request.form)
     form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple('SELECT IDENTYFIKATOR_ZWIERZECIA FROM ZWIERZETA')]
-
+    
     if form.validate_on_submit():
         mapped = [int(x) for x in form.checkbox.data]
         for i in range(len(mapped)):
@@ -744,8 +744,9 @@ class UsunKarme(FlaskForm):
 @app.route('/usuwanie_danych/usuwanie_karmy', methods = ['POST', 'GET'])
 def delete_karma_page():
     form = UsunKarme(request.form)
-    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA_KARMY FROM KARMY')]
-
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA_KARMY FROM KARMY WHERE NAZWA_KARMY NOT IN (SELECT DISTINCT(K.NAZWA_KARMY) FROM ZWIERZETA P INNER JOIN KARMY K ON K.NAZWA_KARMY = P.KARMA)')]
+    if(form.checkbox.choices[0][0] == 'B' and form.checkbox.choices[0][1] == 'B'):
+        form.checkbox.choices = [('Najpierw zmień karmę zwierzęcia', 'Najpierw zmień karmę zwierzęcia')]
     if form.validate_on_submit():
         mapped = [str(x) for x in form.checkbox.data]
         for i in range(len(mapped)):
@@ -771,8 +772,9 @@ class UsunGatunek(FlaskForm):
 @app.route('/usuwanie_danych/usuwanie_gatunku', methods = ['POST', 'GET'])
 def delete_gatunek_page():
     form = UsunGatunek(request.form)
-    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA_GATUNKU FROM GATUNKI')]
-
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA_GATUNKU FROM GATUNKI WHERE NAZWA_GATUNKU NOT IN (SELECT DISTINCT(K.NAZWA_GATUNKU) FROM ZWIERZETA P INNER JOIN GATUNKI K ON K.NAZWA_GATUNKU = P.GATUNEK)')]
+    if(form.checkbox.choices[0][0] == 'B' and form.checkbox.choices[0][1] == 'B'):
+        form.checkbox.choices = [('Najpierw zmień karmę zwierzęcia', 'Najpierw zmień karmę zwierzęcia')]
     if form.validate_on_submit():
         mapped = [str(x) for x in form.checkbox.data]
         for i in range(len(mapped)):
@@ -824,8 +826,9 @@ class UsunZespol(FlaskForm):
 @app.route('/usuwanie_danych/usuwanie_zespolow', methods = ['POST', 'GET'])
 def delete_zespol_page():
     form = UsunZespol(request.form)
-    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA FROM ZESPOLY')]
-
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple('SELECT NAZWA FROM ZESPOLY WHERE NAZWA NOT IN (SELECT DISTINCT(K.NAZWA) FROM PRACOWNICY P INNER JOIN ZESPOLY K ON K.NAZWA = P.NAZWA_ZESPOLU)')]
+    if(form.checkbox.choices[0][0] == 'B' and form.checkbox.choices[0][1] == 'B'):
+            form.checkbox.choices = [('Najpierw zmień zespol pracownika', 'Najpierw zmień zespol pracownika')]
     if form.validate_on_submit():
         mapped = [str(x) for x in form.checkbox.data]
         for i in range(len(mapped)):
@@ -850,8 +853,9 @@ class UsunTyp(FlaskForm):
 @app.route('/usuwanie_danych/usuwanie_specjalizacji', methods = ['POST', 'GET'])
 def delete_typ_prac_page():
     form = UsunTyp(request.form)
-    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple('SELECT SPECJALIZACJA FROM TYPY_PRACOWNIKA')]
-
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple('SELECT SPECJALIZACJA FROM TYPY_PRACOWNIKA WHERE SPECJALIZACJA NOT IN (SELECT DISTINCT(K.SPECJALIZACJA) FROM PRACOWNICY P INNER JOIN TYPY_PRACOWNIKA K ON K.SPECJALIZACJA= P.NAZWA_SPECJALIZACJI)')]
+    if(form.checkbox.choices[0][0] == 'B' and form.checkbox.choices[0][1] == 'B'):
+        form.checkbox.choices = [('Najpierw zmień specjalizacje pracownika', 'Najpierw zmień specjalizacje pracownika')]
     if form.validate_on_submit():
         mapped = [str(x) for x in form.checkbox.data]
         for i in range(len(mapped)):
