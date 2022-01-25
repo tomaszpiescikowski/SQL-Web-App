@@ -117,7 +117,7 @@ body
 	margin: 10px;
 	width: 190px;
 	height: 52px;
-	background-color: #445A1E;
+	background-color: #247200;
 	float: left;
 	font-size: 27px;
 	text-align: center;
@@ -130,7 +130,7 @@ body
 
 .kafelek:hover
 {
-	background-color: #334A0D;
+	background-color: #0a5700;
 }
 
 .kafelek_delete
@@ -152,6 +152,27 @@ body
 .kafelek_delete:hover
 {
 	background-color: #5e2828;
+}
+
+.kafelek_advanced
+{
+	margin: 10px;
+	width: 190px;
+	height: 52px;
+	background-color: #0077d8;
+	float: left;
+	font-size: 27px;
+	text-align: center;
+	padding: 40px 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10px;
+}
+
+.kafelek_advanced:hover
+{
+	background-color: #175b9b;
 }
 
 .nazwa_tab
@@ -218,7 +239,7 @@ body
 	margin: 10px;
 	width: 190px;
 	height: 102px;
-	background-color: #3095d3;
+	background-color: #007fce;
 	float: left;
 	font-size: 35px;
 	text-align: center;
@@ -230,7 +251,7 @@ body
 
 .tile1:hover
 {
-	background-color: #1073b1;
+	background-color: #0b486e;
 }
 
 .podst
@@ -277,7 +298,7 @@ body
 	margin: 10px;
 	width: 190px;
 	height: 102px;
-	background-color: #666666;
+	background-color: #5c5c5c;
 	float: left;
 	font-size: 31px;
 	text-align: center;
@@ -289,7 +310,7 @@ body
 
 .tile2:hover
 {
-	background-color: #555555;
+	background-color: #252525;
 }
 
 
@@ -298,7 +319,7 @@ body
 	margin: 10px;
 	width: 190px;
 	height: 102px;
-	background-color: #93c748;
+	background-color: #417000;
 	float: left;
 	font-size: 35px;
 	text-align: center;
@@ -310,7 +331,7 @@ body
 
 .tile3:hover
 {
-	background-color: #82b637;
+	background-color: #2f490a;
 }
 
 .tile4
@@ -318,7 +339,7 @@ body
 	margin: 10px;
 	width: 420px;
 	height: 82px;
-	background-color: #ee5a32;
+	background-color: #f14414;
 	font-size: 20px;
 	text-align: center;
 	padding: 30px;
@@ -330,7 +351,7 @@ body
 	margin: 10px;
 	width: 190px;
 	height: 102px;
-	background-color: #d94348;
+	background-color: #c50a10;
 	float: left;
 	font-size: 35px;
 	text-align: center;
@@ -338,6 +359,11 @@ body
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.tile6:hover
+{	
+	background-color: #520307;
 }
 
 .zdjecia
@@ -396,11 +422,12 @@ a.tilelink
 td, th { border: 1px solid black; }
 
 
+
 #checkbox li {
 	margin: 0 40px 0 40px;
 	font-size: 25px;
 	list-style-type: none;
-	width: 300px;
+	width: 400px;
 	
 }
 

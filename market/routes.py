@@ -651,7 +651,7 @@ def insert_typ_prac_page():
         print(type(SPECJALIZACJA))
 
 
-        insert.insert_into_oracle('TYPY_PRACOWNIKA', 
+        insert.insert_into_oracle('TYPY_PRACOWNIKA',
             [
                 "SPECJALIZACJA"
             ], 
@@ -868,5 +868,374 @@ def delete_typ_prac_page():
         return render_template('Podstrony/Usuwanie/usun_specjalizacje.html', form=form, headings=naglowki_tabeli_do_wyswietlenia, data=dane_tabeli_do_wyswietlenia)
     else:
         return render_template('Podstrony/Usuwanie/usun_specjalizacje.html', form=form ,headings=[], data=[])
+
+
+class SelectZwierze(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Wyswietl cechy!")
+
+@app.route('/przegladanie_danych/przegladanie_zaawansowane/zwierzeta', methods = ['POST', 'GET'])
+def select_advanced_zwierze_page():
+    form = SelectZwierze(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple("SELECT COLUMN_NAME FROM ALL_TAB_COLUMNS WHERE TABLE_NAME='ZWIERZETA'")]
+    if form.validate_on_submit():
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ','
+        
+        temp = temp[:-1]
+        print(temp)
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT {temp} FROM ZWIERZETA")
+        if mapped == []:
+            return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_zwierzeta.html', form=form, headings=[], data=[])
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_zwierzeta.html', form=form, headings=mapped, data=dane_tabeli_do_wyswietlenia)
+
+    else:
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ', '
+        temp = temp[:-1]
+        print(temp)
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_zwierzeta.html', form=form, headings=[], data=[])
+
+
+
+
+
+
+
+
+class SelectKarmy(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Wyswietl cechy!")
+
+@app.route('/przegladanie_danych/przegladanie_zaawansowane/karmy', methods = ['POST', 'GET'])
+def select_advanced_karmy_page():
+    form = SelectKarmy(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple("SELECT COLUMN_NAME FROM ALL_TAB_COLUMNS WHERE TABLE_NAME='KARMY'")]
+    if form.validate_on_submit():
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ','
+        
+        temp = temp[:-1]
+        print(temp)
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT {temp} FROM KARMY")
+        if mapped == []:
+            return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_karmy.html', form=form, headings=[], data=[])
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_karmy.html', form=form, headings=mapped, data=dane_tabeli_do_wyswietlenia)
+
+    else:
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ', '
+        temp = temp[:-1]
+        print(temp)
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_karmy.html', form=form, headings=[], data=[])
+
+
+
+class SelectGatunki(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Wyswietl cechy!")
+
+@app.route('/przegladanie_danych/przegladanie_zaawansowane/gatunki', methods = ['POST', 'GET'])
+def select_advanced_gatunki_page():
+    form = SelectGatunki(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple("SELECT COLUMN_NAME FROM ALL_TAB_COLUMNS WHERE TABLE_NAME='GATUNKI'")]
+    if form.validate_on_submit():
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ','
+        
+        temp = temp[:-1]
+        print(temp)
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT {temp} FROM GATUNKI")
+        if mapped == []:
+            return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_gatunku.html', form=form, headings=[], data=[])
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_gatunku.html', form=form, headings=mapped, data=dane_tabeli_do_wyswietlenia)
+
+    else:
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ', '
+        temp = temp[:-1]
+        print(temp)
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_gatunku.html', form=form, headings=[], data=[])
+
+
+
+class SelectPracownicy(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Wyswietl cechy!")
+
+
+@app.route('/przegladanie_danych/przegladanie_zaawansowane/pracownicy', methods = ['POST', 'GET'])
+def select_advanced_pracownicy_page():
+    form = SelectPracownicy(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple("SELECT COLUMN_NAME FROM ALL_TAB_COLUMNS WHERE TABLE_NAME='PRACOWNICY'")]
+    if form.validate_on_submit():
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ','
+        
+        temp = temp[:-1]
+        print(temp)
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT {temp} FROM PRACOWNICY")
+        if mapped == []:
+            return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_pracownicy.html', form=form, headings=[], data=[])
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_pracownicy.html', form=form, headings=mapped, data=dane_tabeli_do_wyswietlenia)
+
+    else:
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ', '
+        temp = temp[:-1]
+        print(temp)
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_pracownicy.html', form=form, headings=[], data=[])
+
+
+class SelectZespoly(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Wyswietl cechy!")
+
+@app.route('/przegladanie_danych/przegladanie_zaawansowane/zespoly', methods = ['POST', 'GET'])
+def select_advanced_zespoly_page():
+    form = SelectZespoly(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple("SELECT COLUMN_NAME FROM ALL_TAB_COLUMNS WHERE TABLE_NAME='ZESPOLY'")]
+    if form.validate_on_submit():
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ','
+        
+        temp = temp[:-1]
+        print(temp)
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT {temp} FROM ZESPOLY")
+        if mapped == []:
+            return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_zespoly.html', form=form, headings=[], data=[])
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_zespoly.html', form=form, headings=mapped, data=dane_tabeli_do_wyswietlenia)
+
+    else:
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ', '
+        temp = temp[:-1]
+        print(temp)
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_zespoly.html', form=form, headings=[], data=[])
+
+
+class SelectTyp(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Wyswietl cechy!")
+
+@app.route('/przegladanie_danych/przegladanie_zaawansowane/specjalizacje', methods = ['POST', 'GET'])
+def select_advanced_specjalizacje_page():
+    form = SelectTyp(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple("SELECT COLUMN_NAME FROM ALL_TAB_COLUMNS WHERE TABLE_NAME='TYPY_PRACOWNIKA'")]
+    if form.validate_on_submit():
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ','
+        
+        temp = temp[:-1]
+        print(temp)
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT {temp} FROM TYPY_PRACOWNIKA")
+        if mapped == []:
+            return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_specjalizacje.html', form=form, headings=[], data=[])
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_specjalizacje.html', form=form, headings=mapped, data=dane_tabeli_do_wyswietlenia)
+
+    else:
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ', '
+        temp = temp[:-1]
+        print(temp)
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_specjalizacje.html', form=form, headings=[], data=[])
+
+class SelectAzyl(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Wyswietl cechy!")
+
+@app.route('/przegladanie_danych/przegladanie_zaawansowane/azyle', methods = ['POST', 'GET'])
+def select_advanced_azyle_page():
+    form = SelectAzyl(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple("SELECT COLUMN_NAME FROM ALL_TAB_COLUMNS WHERE TABLE_NAME='AZYLE'")]
+    if form.validate_on_submit():
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ','
+        
+        temp = temp[:-1]
+        print(temp)
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT {temp} FROM AZYLE")
+        if mapped == []:
+            return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_azyle.html', form=form, headings=[], data=[])
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_azyle.html', form=form, headings=mapped, data=dane_tabeli_do_wyswietlenia)
+
+    else:
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ', '
+        temp = temp[:-1]
+        print(temp)
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_azyle.html', form=form, headings=[], data=[])
+
+class SelectBilet(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Wyswietl cechy!")
+
+@app.route('/przegladanie_danych/przegladanie_zaawansowane/bilety', methods = ['POST', 'GET'])
+def select_advanced_bilety_page():
+    form = SelectBilet(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple("SELECT COLUMN_NAME FROM ALL_TAB_COLUMNS WHERE TABLE_NAME='BILETY'")]
+    if form.validate_on_submit():
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ','
+        
+        temp = temp[:-1]
+        print(temp)
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT {temp} FROM BILETY")
+        if mapped == []:
+            return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_bilety.html', form=form, headings=[], data=[])
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_bilety.html', form=form, headings=mapped, data=dane_tabeli_do_wyswietlenia)
+
+    else:
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ', '
+        temp = temp[:-1]
+        print(temp)
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_bilety.html', form=form, headings=[], data=[])
+
+class SelectObszary(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Wyswietl cechy!")
+
+@app.route('/przegladanie_danych/przegladanie_zaawansowane/obszary', methods = ['POST', 'GET'])
+def select_advanced_obszary_page():
+    form = SelectObszary(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple("SELECT COLUMN_NAME FROM ALL_TAB_COLUMNS WHERE TABLE_NAME='OBSZARY_ZOO'")]
+    if form.validate_on_submit():
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ','
+        
+        temp = temp[:-1]
+        print(temp)
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT {temp} FROM OBSZARY_ZOO")
+        if mapped == []:
+            return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_obszary.html', form=form, headings=[], data=[])
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_obszary.html', form=form, headings=mapped, data=dane_tabeli_do_wyswietlenia)
+
+    else:
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ', '
+        temp = temp[:-1]
+        print(temp)
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_obszary.html', form=form, headings=[], data=[])
+
+class SelectPawilony(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Wyswietl cechy!")
+
+@app.route('/przegladanie_danych/przegladanie_zaawansowane/pawilony', methods = ['POST', 'GET'])
+def select_advanced_pawilony_page():
+    form = SelectPawilony(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple("SELECT COLUMN_NAME FROM ALL_TAB_COLUMNS WHERE TABLE_NAME='PAWILONY'")]
+    if form.validate_on_submit():
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ','
+        
+        temp = temp[:-1]
+        print(temp)
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT {temp} FROM PAWILONY")
+        if mapped == []:
+            return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_pawilony.html', form=form, headings=[], data=[])
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_pawilony.html', form=form, headings=mapped, data=dane_tabeli_do_wyswietlenia)
+
+    else:
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ', '
+        temp = temp[:-1]
+        print(temp)
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_pawilony.html', form=form, headings=[], data=[])
+
+
+class SelectTypyAzylu(FlaskForm):
+    checkbox = MultiCheckboxField('Label', choices=str)
+    submit = SubmitField("Wyswietl cechy!")
+
+@app.route('/przegladanie_danych/przegladanie_zaawansowane/typy_azylu', methods = ['POST', 'GET'])
+def select_advanced_typy_azylu_page():
+    form = SelectTypyAzylu(request.form)
+    form.checkbox.choices = [(elem[0], elem[0]) for elem in select.select_simple("SELECT COLUMN_NAME FROM ALL_TAB_COLUMNS WHERE TABLE_NAME='TYPY_AZYLU'")]
+    if form.validate_on_submit():
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ','
+        
+        temp = temp[:-1]
+        print(temp)
+        dane_tabeli_do_wyswietlenia = select.select_simple(f"SELECT {temp} FROM TYPY_AZYLU")
+        if mapped == []:
+            return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_typy_azylu.html', form=form, headings=[], data=[])
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_typy_azylu.html', form=form, headings=mapped, data=dane_tabeli_do_wyswietlenia)
+
+    else:
+        mapped = [str(x) for x in form.checkbox.data]
+        print(mapped)
+        temp = ''
+        for i in mapped:
+            temp += i + ', '
+        temp = temp[:-1]
+        print(temp)
+        return render_template('Podstrony/Przegladanie/Zaawansowane_podstrony/cechy_typy_azylu.html', form=form, headings=[], data=[])
+
 
 
