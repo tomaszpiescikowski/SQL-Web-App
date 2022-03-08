@@ -2,9 +2,9 @@ from market import app
 
 """
     Tutaj włączamy nasz serwer.
-    Żeby wszystko działało musisz:
-    - mieć włączony VPN politechniki
-    - podać ścieżkę do swojego instant clienta Oracle, który ściągnęłaś
+    Żeby wszystko działało:
+    - trzeba mieć włączony VPN politechniki
+    - należy podać ścieżkę do swojego instant clienta Oracle
 """
 
 if __name__ == "__main__":
